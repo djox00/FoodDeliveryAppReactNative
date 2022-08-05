@@ -1,39 +1,28 @@
-import * as AuthSession from "expo-auth-session";
-import jwtDecode from "jwt-decode";
-import { useEffect, useState } from "react";
-import { Alert, Button, Platform, StyleSheet, Text, View } from "react-native";
 
-
-
+import { Fragment } from "react";
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 export default function App() {
 
+
+
+  const Stack = createNativeStackNavigator();
   return (
-    <View style={styles.container}>
-    
-        <Button
-             style={styles.button}
-          title="Log in"
-          onPress={() => alert("blabla")}
+    <NavigationContainer>
+      <Stack.Navigator>  
+   <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ title: 'Sign in' }}
         />
-    
-    </View>
+<Stack.Screen name="Register" component={Register} />
+</Stack.Navigator>
+
+  </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    textAlign: "center",
-    marginTop: 40,
-  },
-  button:{
-    borderRadius: "50px", 
-    color: "white"
-  }
-});
+

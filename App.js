@@ -8,10 +8,14 @@ import Register from "./screens/Register";
 import Main from "./screens/Main";
 import { auth } from "./config/firebase-config";
 import { Text } from "react-native";
+import RestaurantSingle from "./screens/Restaurants/RestaurantSingle";
 
 export default function App() {
 
-  console.log(auth.currentUser)
+  
+
+
+
 
   const Stack = createNativeStackNavigator();
   return (
@@ -28,14 +32,16 @@ export default function App() {
 
         }}>
 
-
+          
 
 
           <Stack.Screen name="Login" component={Login} options={{ title: 'Sign in' }} />
 
-          <Stack.Screen name="Main" component={Main} options={{ headerLeft: () => null }} />
+          <Stack.Screen name="Main" component={Main} options={{ headerLeft: () => null, headerShown: false }} />
 
           <Stack.Screen name="Register" component={Register} />
+
+          <Stack.Screen name="RestaurantSingle" component={RestaurantSingle} />
 
 
 

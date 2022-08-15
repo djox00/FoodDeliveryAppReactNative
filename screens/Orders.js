@@ -1,23 +1,20 @@
 import React, { Fragment, useState, useRef } from 'react'
 import {  Button, TouchableOpacity, StyleSheet, Text, View } from "react-native";
-import BottomTabs from './Navigations/BottomTabs';
-import {auth} from '../config/firebase-config'; 
-const Main = ({navigation}) => {
 
+const Orders = () => {
     
-
-console.log(auth.currentUser); 
-
   return (
-    <Fragment>
-  
-   <BottomTabs />    
-   
-   </Fragment>
+    <View style={styles.container}> 
+
+<Text> Orders</Text>
+
+
+
+    </View>
   )
 }
 
-export default Main
+export default Orders
 
 const styles = StyleSheet.create({
     container: {

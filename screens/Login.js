@@ -11,7 +11,7 @@ import Error from '../UI Components/Error';
 const Login = ({navigation}) => {
 
    
-if(auth.currentUser!=null) navigation.navigate("Main"); 
+/* if(auth.currentUser!=null) */ navigation.navigate("Main"); 
 
     const [error, seterror] = useState({message: '', status: false}); 
 

@@ -1,14 +1,29 @@
 
 import React, { Fragment } from 'react'
 import { StyleSheet, Text, View, Image } from "react-native";
+import MenuItem from './MenuItem';
 
-const RestaurantSingle = ({route,navigation}) => {
-    const { id, otherParam } = route.params
+const RestaurantSingle = ({route , navigation}) => {
 
+   const  { id, restaurant_adress, restaurant_menu, restaurant_name  }  =  route.params.restaurant_data; 
+
+   
   return (
+
     <Fragment>
          <View style={styles.container}> 
-           <Text>itemId: {JSON.stringify(id)}</Text>
+
+          <View style={styles['restaurant_card']}> 
+          
+          <MenuItem />
+          
+
+
+
+
+          </View>
+
+         
       
 
     </View>
@@ -28,4 +43,18 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: "100%",
         width: "100%"
-    }}); 
+    },
+    "restaurant_card": { 
+      position: "absolute",
+       top: 10,
+       left: 20, 
+       right: 20, 
+       bottom: 0,
+       backgroundColor: "white", 
+       borderTopLeftRadius: 20,
+       borderTopRightRadius: 20,
+       padding: 10
+
+    }
+  
+  }); 

@@ -23,13 +23,13 @@ const Register = ({navigation}) => {
 
     const [error, seterror] = useState({message: '', status: false}); 
 
-    const handleRegister = ({ first_name, last_name, email_adress, password, conf_password, adress, phone }) => {
+    const handleRegister = async ({ first_name, last_name, email_adress, password, conf_password, adress, phone }) => {
 try{
    
 
     seterror(()=>{return {message: '', status: false}});
     
-    if (!first_name.trim() || last_name.trim() || email_adress.trim() || password.trim() || conf_password.trim() || adress.trim() || phone.trim() ) {
+    if (!first_name.trim() || !last_name.trim() || !email_adress.trim() || !password.trim() || !conf_password.trim() || !adress.trim() || !phone.trim() ) {
         throw Error("a input field is empty! you need to fill all of them!!");
         
       }
@@ -37,19 +37,20 @@ try{
 
     if(password!==conf_password) throw Error("Password is not a match!"); // not solved 
 
-    const user = createUserWithEmailAndPassword(auth,email_adress,password); 
+    const user = await createUserWithEmailAndPassword(auth,email_adress,password); 
 
     setDoc(doc(db,"Users",auth.currentUser.uid),{
+        user: "user",
         first_name: first_name, 
         last_name: last_name,
         adress: adress, 
         phone: phone }); 
     
-        navigation.navigate("Login"); 
+        navigation.navigate("Main"); 
 
 }catch(err) {
 
-    console.log(err.message); 
+    console.log(err); 
 
     seterror(()=>{return {message: error.message, status: true}});  
 

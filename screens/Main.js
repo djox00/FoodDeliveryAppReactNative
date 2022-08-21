@@ -6,7 +6,7 @@ const Main = ({navigation}) => {
 
     
 
-console.log(auth.currentUser); 
+
 
   return (
     <Fragment>

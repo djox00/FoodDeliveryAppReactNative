@@ -1,15 +1,41 @@
-import React, { Fragment, useState, useRef } from 'react'
+import React, { Fragment, useState, useRef, useEffect } from 'react'
 import { Button, TouchableOpacity, StyleSheet, Text, View, ScrollView, FlatList, Animated } from "react-native";
 import BottomTabs from './Navigations/BottomTabs';
-import RestaurantList from './Restaurants/RestaurantsList';
+import Restaurant from './Restaurants/Restaurant';
 import Search from './Components/Search';
+import { getFirestore } from '@firebase/firestore';
+import { collection, getDocs, doc, query, getDoc } from '@firebase/firestore';
 
-const Restaurants = ({ navigation }) => {
+const RestaurantsScreen = ({ navigation }) => {
 
 
 const scrollY = new Animated.Value(0); 
 const diffClamp = Animated.diffClamp(scrollY,0,60); 
 const translateY = diffClamp.interpolate({inputRange:[0,60], outputRange:[0,-60]}); 
+
+
+const db = getFirestore(); 
+
+const [restaurants, setrestaurants] = useState([]); 
+
+
+
+
+
+const getRestaurants = async ()=>{ 
+  let rest = []; 
+  const response = await getDocs(collection(db,"Restaurants")); 
+  response.forEach((doc)=>  rest = [...rest, {...doc.data(), id: doc.id}]); 
+  setrestaurants(rest); 
+}
+useEffect(() => {
+  getRestaurants();
+
+}, [])
+
+console.log(restaurants); 
+let restaurants_arry = restaurants.map((restaurant)=> <Restaurant key={Math.random() /* add id to Restaurants or get the document id */ }   navigation={navigation} restaurant_data={restaurant}  />)
+
 
   return (
     <View style={styles.container}>
@@ -26,25 +52,7 @@ const translateY = diffClamp.interpolate({inputRange:[0,60], outputRange:[0,-60]
      <Search />
      </Animated.View>
      
-
-        <RestaurantList navigation={navigation} />
-        <RestaurantList navigation={navigation} />
-        <RestaurantList navigation={navigation} />
-        <RestaurantList navigation={navigation} />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
-        <RestaurantList />
+{restaurants_arry}
        
         
 
@@ -57,7 +65,7 @@ const translateY = diffClamp.interpolate({inputRange:[0,60], outputRange:[0,-60]
   )
 }
 
-export default Restaurants
+export default RestaurantsScreen
 
 const styles = StyleSheet.create({
   container: {

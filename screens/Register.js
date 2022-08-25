@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     "login-form": {
         top: "auto",
-        marginHorizontal: "20px"
+        marginHorizontal: 20
     },
     "input-field": {
         backgroundColor: "#fff",
@@ -145,11 +145,11 @@ const styles = StyleSheet.create({
     },
     button: {
         marginVertical: "10%",
-        width: "100px",
+        width: 100,
         textAlign: "center",
-        borderRadius: "20px",
+        borderRadius: 20,
         color: "white",
-        padding: "10px",
+        padding: 10,
         backgroundColor: "purple", 
         fontWeight: "800"
     }

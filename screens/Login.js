@@ -11,7 +11,7 @@ import Error from '../UI Components/Error';
 const Login = ({navigation}) => {
 
    
-/* if(auth.currentUser!=null) */ navigation.navigate("Main"); 
+if(auth.currentUser!=null) navigation.navigate("Main"); 
 
     const [error, seterror] = useState({message: '', status: false}); 
 
@@ -62,8 +62,8 @@ const Login = ({navigation}) => {
         <View style={styles.container}>
             <View style={styles['login-form']}>
                 { error.status ? <Error message={error.message} /> : null}
-                <TextInput placeholder="enter you email" style={[styles['input-field'],{marginBottom: "20px"} ]} ref={EmailRef} />
-                <TextInput placeholder="enter you password" secureTextEntry={true} style={[styles['input-field'],{marginBottom: "50px"} ]} ref={PasswordRef} />
+                <TextInput placeholder="enter you email" style={[styles['input-field'],{marginBottom: 20} ]} ref={EmailRef} />
+                <TextInput placeholder="enter you password" secureTextEntry={true} style={[styles['input-field'],{marginBottom: 50} ]} ref={PasswordRef} />
                 <View style={styles['align-center']}> 
 
                 <TouchableOpacity style={styles.button} title="Sign in" onPress={()=>handleLogin(EmailRef.current.value,PasswordRef.current.value)} ><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Login</Text></TouchableOpacity>
@@ -71,7 +71,7 @@ const Login = ({navigation}) => {
                 <Text style={{ marginVertical: 30, textAlign: "center", color: "#fff", fontWeight: "500" }} >Dont have an accout?</Text>
                 
                 <View style={styles['align-center']}> 
-                <TouchableOpacity style={[styles.button,{width: "150px"}]} title="Register" onPress={()=> navigation.navigate("Register")}><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Create an account</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.button,{width: 150}]} title="Register" onPress={()=> navigation.navigate("Register")}><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Create an account</Text></TouchableOpacity>
                 
                 </View>
                 
@@ -105,11 +105,11 @@ const styles = StyleSheet.create({
     },
     button: {
         marginVertical: "2%",
-        width: "100px",
+        width: 100,
         textAlign: "center",
-        borderRadius: "20px",
+        borderRadius: 20,
         color: "white",
-        padding: "10px",
+        padding: 10,
         backgroundColor: "purple", 
         fontWeight: "800"
     }, 

@@ -27,7 +27,7 @@ setimgURL(url);
 
      <TouchableOpacity  style={styles.card} onPress={()=>navigation.navigate("RestaurantSingle",{restaurant_data})}  > 
        <View style={{width: "30%"}}>
-          <Image source={{uri: imgURL}} style={{width: "70px", height: "70px"}} />
+          <Image source={{uri: imgURL}} style={{width: 70, height: 70}} />
 
 
        </View>
@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'flex-start',
         backgroundColor: "white",
-        borderRadius: "20px",
+        borderRadius: 20,
         overflow:"hidden",
-        marginVertical: "15px",
+        marginVertical: 15,
       
         
     }, 

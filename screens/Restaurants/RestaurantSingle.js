@@ -3,10 +3,23 @@ import React, { Fragment } from 'react'
 import { StyleSheet, Text, View, Image } from "react-native";
 import MenuItem from './MenuItem';
 
+
 const RestaurantSingle = ({route , navigation}) => {
 
    const  { id, restaurant_adress, restaurant_menu, restaurant_name  }  =  route.params.restaurant_data; 
 
+   let menu_items = Object.values(restaurant_menu);
+
+   const objArray = [];
+   Object.keys(restaurant_menu).forEach(key => objArray.push({
+    
+      food : restaurant_menu[key]
+   }));
+   console.log(objArray);
+
+    let menu = objArray.map((item)=> <MenuItem item={item} restaurant_id={id} />  ); 
+
+    
    
   return (
 
@@ -15,8 +28,11 @@ const RestaurantSingle = ({route , navigation}) => {
 
           <View style={styles['restaurant_card']}> 
           
-          <MenuItem />
+          <Text>{menu.food_name}</Text>
+
           
+          
+          {menu}
 
 
 

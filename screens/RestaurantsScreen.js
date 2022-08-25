@@ -48,7 +48,7 @@ let restaurants_arry = restaurants.map((restaurant)=> <Restaurant key={Math.rand
         
        scrollY.setValue( e.nativeEvent.contentOffset.y); 
       }} >
-          <Animated.View style={{transform : [{translateY: translateY}], elevation: 4,  zIndex: 100, marginBottom: "50px"  }}> 
+          <Animated.View style={{transform : [{translateY: translateY}], elevation: 4,  zIndex: 100, marginBottom: 50  }}> 
      <Search />
      </Animated.View>
      

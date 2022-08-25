@@ -22,16 +22,16 @@ card: {
     left: 0,
     width: "90%",
     left: "5%",
-    height: "50px", 
+    height: 50, 
     backgroundColor: "white",
     borderColor: "gray",
-    borderWidth: "1px",
+    borderWidth: 1,
     flexDirection: 'row',
      flexWrap: 'wrap',
     alignItems: 'flex-start',
-    borderRadius: "50px",
-    marginTop: "10px",
-    marginBottom: "10px"
+    borderRadius: 50,
+    marginTop: 10,
+    marginBottom: 10
 
 },
 search: {

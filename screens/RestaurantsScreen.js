@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react'
-import { Button, TouchableOpacity, StyleSheet, Text, View, ScrollView, FlatList, Animated } from "react-native";
+import { Button, TouchableOpacity, StyleSheet, Text, View, ScrollView, FlatList, Animated, SafeAreaView } from "react-native";
 import BottomTabs from './Navigations/BottomTabs';
 import Restaurant from './Restaurants/Restaurant';
 import Search from './Components/Search';
@@ -8,6 +8,9 @@ import { collection, getDocs, doc, query, getDoc } from '@firebase/firestore';
 
 const RestaurantsScreen = ({ navigation }) => {
 
+
+
+  console.log
 
 const scrollY = new Animated.Value(0); 
 const diffClamp = Animated.diffClamp(scrollY,0,60); 
@@ -69,12 +72,12 @@ export default RestaurantsScreen
 
 const styles = StyleSheet.create({
   container: {
-  
     backgroundColor: "rgb(28, 190, 142)",
     height: "100%",
     width: "100%"
   },
   scrollview : {
+  top: 25,
    position: "relative",
     width: "90%",
     marginHorizontal: "5%"

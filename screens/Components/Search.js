@@ -7,7 +7,7 @@ const Search = () => {
   return (
    <View style={styles.card}> 
   <FontAwesomeIcon icon={faSearch} style={styles.search} />
-  <TextInput style={styles['search-input']} />
+  <TextInput style={styles['search-input']}  />
    </View>
   )
 }
@@ -26,22 +26,29 @@ card: {
     backgroundColor: "white",
     borderColor: "gray",
     borderWidth: 1,
+    flex: 1,
+    padding: 15,
     flexDirection: 'row',
-     flexWrap: 'wrap',
     alignItems: 'flex-start',
     borderRadius: 50,
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    overflow: "hidden"
 
 },
 search: {
     color: "purple",
     width: "20%",
-    marginVertical: "auto"
+    marginBottom: "auto",
+    marginTop: "auto"
+    
 },
 "search-input" : {
    marginVertical: "auto",
    width: "70%",
+   marginBottom: "auto",
+    marginTop: "auto",
+    marginLeft: 10
 
 
 }

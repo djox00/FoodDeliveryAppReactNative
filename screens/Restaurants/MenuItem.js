@@ -37,7 +37,7 @@ setimgURL(url);
 
          
 
-          <View style={{display: "block", textAlign: "center"}}>   
+          <View style={{textAlign: "center"}}>   
           <Image source={{uri: imgURL}} style={{width: 70, height: 70, borderRadius: 10}} />
           <Text  style={{}}>{item?.food?.food_name}</Text>
        </View> 

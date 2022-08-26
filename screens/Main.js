@@ -4,7 +4,7 @@ import BottomTabs from './Navigations/BottomTabs';
 import {auth} from '../config/firebase-config'; 
 const Main = ({navigation}) => {
 
-    
+    console.log(auth.currentUser);
 
 
 

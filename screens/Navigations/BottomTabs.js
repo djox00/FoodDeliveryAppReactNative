@@ -4,14 +4,18 @@ import MyProfile from '../MyProfile';
 import RestaurantsScreen from '../RestaurantsScreen';
 import Orders from '../Orders';
 import Tools from '../Tools';
-const Tab = createMaterialBottomTabNavigator();
 import { collection, getDocs, getFirestore, query, where, doc, getDoc } from '@firebase/firestore';
 import { auth } from '../../config/firebase-config';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser, faGear, faCartShopping, faUtensils } from '@fortawesome/free-solid-svg-icons';
 
 
+
+
 const  BottomTabs = () => {
+
+
+  const Tab = createMaterialBottomTabNavigator();
 
 const [userType, setuserType] = useState("user"); 
 
@@ -40,10 +44,10 @@ useEffect(() => {
     shifting={true}
     barStyle={{ backgroundColor: '#694fad', }}>
         
-    <Tab.Screen name="Restaurants"  options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white", transform: "scale(1.2)"}}  icon={faUtensils} />}} component={RestaurantsScreen} /> 
-    <Tab.Screen name="Orders" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white", transform: "scale(1.2)"}}  icon={faCartShopping} />}} component={Orders} /> 
-    {userType == "user" ? <Tab.Screen name="Tools"  options={{tabBarIcon: ()=><FontAwesomeIcon   style={{color: "white", transform: "scale(1.2)"}} icon={faGear} />}}   component={Tools}  /> : null}
-    <Tab.Screen name="My profile" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white", transform: "scale(1.2)"}}  icon={faUser} />}}  component={MyProfile}  /> 
+    <Tab.Screen name="Restaurants"  options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUtensils} />}} component={RestaurantsScreen} /> 
+    <Tab.Screen name="Orders" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faCartShopping} />}} component={Orders} /> 
+    {userType == "user" ? <Tab.Screen name="Tools"  options={{tabBarIcon: ()=><FontAwesomeIcon   style={{color: "white"}} icon={faGear} />}}   component={Tools}  /> : null}
+    <Tab.Screen name="My profile" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUser} />}}  component={MyProfile}  /> 
     
 
     </Tab.Navigator>

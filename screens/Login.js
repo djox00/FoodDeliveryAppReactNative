@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import { Alert, Button, Platform, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useEffect, useRef, useState } from 'react'
+import { Alert, Button, Platform, StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { TextInput } from "react-native";
 import { auth } from '../config/firebase-config';
 import { signInWithEmailAndPassword,  GoogleAuthProvider, setPersistence,  signInWithPopup, signInWithCredential } from 'firebase/auth';
@@ -11,7 +11,10 @@ import Error from '../UI Components/Error';
 const Login = ({navigation}) => {
 
    
-if(auth.currentUser!=null) navigation.navigate("Main"); 
+useEffect(() => {
+   /*  if(auth.currentUser!=null) */ navigation.navigate("Main"); 
+}, [])
+
 
     const [error, seterror] = useState({message: '', status: false}); 
 
@@ -59,6 +62,7 @@ if(auth.currentUser!=null) navigation.navigate("Main");
     const PasswordRef = useRef(); 
 
     return (
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>   
         <View style={styles.container}>
             <View style={styles['login-form']}>
                 { error.status ? <Error message={error.message} /> : null}
@@ -71,7 +75,7 @@ if(auth.currentUser!=null) navigation.navigate("Main");
                 <Text style={{ marginVertical: 30, textAlign: "center", color: "#fff", fontWeight: "500" }} >Dont have an accout?</Text>
                 
                 <View style={styles['align-center']}> 
-                <TouchableOpacity style={[styles.button,{width: 150}]} title="Register" onPress={()=> navigation.navigate("Register")}><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Create an account</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.button,{width: 160}]} title="Register" onPress={()=> navigation.navigate("Register")}><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Create an account</Text></TouchableOpacity>
                 
                 </View>
                 
@@ -81,6 +85,7 @@ if(auth.currentUser!=null) navigation.navigate("Main");
 
 
         </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
@@ -109,7 +114,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         borderRadius: 20,
         color: "white",
-        padding: 10,
+        padding: 15,
         backgroundColor: "purple", 
         fontWeight: "800"
     }, 

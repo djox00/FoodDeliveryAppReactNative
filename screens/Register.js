@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import React, { Fragment, useState, useRef } from 'react'
-import {  Button, TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import {  Button, TouchableOpacity, StyleSheet, Text, View, ScrollView } from "react-native";
 import { TextInput } from "react-native";
 import { auth } from '../config/firebase-config';
 import Error from '../UI Components/Error';
@@ -63,15 +63,15 @@ try{
 
     return (
         <Fragment>
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
 
-
+   <View style={styles.container} > 
 
            {error.status ? <Error message={error.message} />: null}
                 <View style={styles['login-form']}>
 
 
-                    <View style={{ display: "inline" }}>
+                    <View style={styles['first-second']} >
                         <TextInput placeholder="enter you First name"  textContentType="username" ref={first_nameRef} style={[styles['input-field'], styles['first-second']]} />
                         <TextInput placeholder="enter you Last name" textContentType="username" ref={last_nameRef} style={[styles['input-field'], styles['first-second']]} />
 
@@ -97,7 +97,7 @@ try{
                      adress: adressRef.current.value,
                      phone: phoneRef.current.value
 
-                     })}  ><Text style={{color: "white", fontWeight: "600"}}>Register</Text></TouchableOpacity>
+                     })}  ><Text style={{color: "white", fontWeight: "600", textAlign: "center"}}>Register</Text></TouchableOpacity>
 
 </View>
                      
@@ -106,8 +106,8 @@ try{
 
 
 
-
-            </View>
+                </View>
+            </ScrollView>
         </Fragment>
     )
 }
@@ -119,12 +119,12 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         backgroundColor: "rgb(28, 190, 142)",
         alignItems: "center",
-        height: "100%",
-        width: "100%"
+        marginBottom: 0,
+        top: 0
     },
     "login-form": {
         top: "auto",
-        marginHorizontal: 20
+        marginHorizontal: 10
     },
     "input-field": {
         backgroundColor: "#fff",
@@ -137,7 +137,9 @@ const styles = StyleSheet.create({
 
     },
     "first-second": {
-        width: "45%",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
     },
     "inline": {
         display: "inline",
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         borderRadius: 20,
         color: "white",
-        padding: 10,
+        padding: 15,
         backgroundColor: "purple", 
         fontWeight: "800"
     }

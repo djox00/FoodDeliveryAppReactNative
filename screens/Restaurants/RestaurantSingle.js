@@ -29,13 +29,8 @@ const RestaurantSingle = ({route , navigation}) => {
           <View style={styles['restaurant_card']}> 
           
           <Text>{menu.food_name}</Text>
-
-          
-          
+                    
           {menu}
-
-
-
 
           </View>
 
@@ -55,7 +50,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor: "rgb(28, 190, 142)",
+        backgroundColor: "rgb(255, 211, 99)",
         alignItems: "center",
         height: "100%",
         width: "100%"

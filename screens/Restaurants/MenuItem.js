@@ -36,7 +36,7 @@ const MenuItem = ({ item, restaurant_id }) => {
 
 
         <View style={{ textAlign: "center", marginRight: 10 }}>
-          <Image source={{ uri: imgURL }} style={{ width: 70, height: 70, borderRadius: 10 }} />
+          <Image source={{ uri: imgURL != null && imgURL != ""? imgURL : "http://www.fnfmetal.com/uploads/products/1311-product_Mp8wDrKX.jpg" }} style={{ width: 70, height: 70, borderRadius: 10 }} />
           <Text style={{ color: "white", textAlign: "center" }}>{item?.food?.food_name}</Text>
         </View>
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     overflow: "hidden",
     height: 100,
-    backgroundColor: "purple",
+    backgroundColor: "#694fad",
 
   },
   item: {
@@ -120,7 +120,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 8,
     borderWidth: 0.5,
-    borderColor: 'purple',
+    borderColor: '#694fad',
     borderRadius: 8,
     color: 'black',
     paddingRight: 30,
@@ -134,7 +134,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 8,
     marginVertical: 5,
     borderWidth: 0.5,
-    borderColor: 'purple',
+    borderColor: '#694fad',
     borderRadius: 8,
     color: 'black',
     paddingRight: 20,

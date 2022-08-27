@@ -31,7 +31,7 @@ export default ToolsMenu
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "rgb(28, 190, 142)",
+        backgroundColor: "rgb(255, 211, 99)",
         height: "100%",
         width: "100%"
     }}); 

@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./screens/Authentication/Login";
 import Register from "./screens/Authentication/Register";
 import Main from "./screens/Main";
+import { StatusBar } from "react-native";
 
 import RestaurantSingle from "./screens/Restaurants/RestaurantSingle";
 
@@ -19,6 +20,7 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <Fragment>
+      <StatusBar hidden />
       <NavigationContainer >
 
 
@@ -27,7 +29,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{
           headerMode: 'screen',
           headerTintColor: 'white',
-          headerStyle: { backgroundColor: 'purple' },
+          headerStyle: { backgroundColor: '#694fad' },
 
         }}>
 

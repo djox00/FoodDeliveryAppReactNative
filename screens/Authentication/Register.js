@@ -43,6 +43,7 @@ const {first_name, last_name, email, password, conf_password, adress, phone} = u
 
     
     setDoc(doc(db,"Users",auth.currentUser.uid),{
+        email: auth.currentUser.email,
         user: "user",
         first_name: first_name, 
         last_name: last_name,
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor: "rgb(28, 190, 142)",
+        backgroundColor: "rgb(255, 211, 99)",
         alignItems: "center",
         marginBottom: 0,
         top: 0
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         color: "white",
         padding: 15,
-        backgroundColor: "purple", 
+        backgroundColor: "#694fad", 
         fontWeight: "800"
     }
 });

@@ -12,7 +12,7 @@ const Login = ({navigation}) => {
    
 
 useEffect(() => {
-    if(auth.currentUser!=null) navigation.navigate("Main"); 
+    /* if(auth.currentUser!=null) */ navigation.navigate("Main"); 
 }, [])
 
 
@@ -67,7 +67,7 @@ useEffect(() => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "rgb(28, 190, 142)",
+        backgroundColor: "rgb(255, 211, 99)",
         alignItems: "center",
         height: "100%",
         width: "100%"
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         color: "white",
         padding: 15,
-        backgroundColor: "purple", 
+        backgroundColor: "#694fad", 
         fontWeight: "800"
     }, 
     "align-center":{ 

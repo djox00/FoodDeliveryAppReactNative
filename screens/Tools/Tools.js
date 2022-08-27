@@ -20,7 +20,7 @@ const Tools = ({navigation}) => {
           <Stack.Navigator screenOptions={{
           headerMode: 'screen',
           headerTintColor: 'white',
-          headerStyle: { backgroundColor: 'purple' },
+          headerStyle: { backgroundColor: '#694fad' },
           
 
         }}> 
@@ -36,10 +36,3 @@ const Tools = ({navigation}) => {
 
 export default Tools
 
-const styles = StyleSheet.create({
-    container: {
-      
-        backgroundColor: "rgb(28, 190, 142)",
-        height: "100%",
-        width: "100%"
-    }}); 

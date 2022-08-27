@@ -9,7 +9,7 @@ const EditRestaurant = () => {
 
 
 <FontAwesomeIcon icon={faUtensils} style={styles.icon} /> 
-<Text style={styles.text}> <FontAwesomeIcon icon={faPencil} color="orange" />  Edit Restaurant</Text>
+<Text style={styles.text}> <FontAwesomeIcon icon={faPencil} color="rgb(255, 211, 99)" />  Edit Restaurant</Text>
 
     </TouchableOpacity>
   )
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   icon: { 
     transform: [{scale: 1.2}],
     marginRight: 3,
-    color: "orange"
+    color: "rgb(255, 211, 99)"
     
   }, 
   text: { 

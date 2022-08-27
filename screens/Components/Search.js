@@ -37,7 +37,7 @@ card: {
 
 },
 search: {
-    color: "purple",
+    color: "#694fad",
     width: "20%",
     marginBottom: "auto",
     marginTop: "auto"

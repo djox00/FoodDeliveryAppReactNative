@@ -3,11 +3,10 @@ import { Fragment } from "react";
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from "./screens/Login";
-import Register from "./screens/Register";
+import Login from "./screens/Authentication/Login";
+import Register from "./screens/Authentication/Register";
 import Main from "./screens/Main";
-import { auth } from "./config/firebase-config";
-import { Text } from "react-native";
+
 import RestaurantSingle from "./screens/Restaurants/RestaurantSingle";
 
 export default function App() {

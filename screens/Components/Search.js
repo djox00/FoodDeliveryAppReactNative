@@ -7,7 +7,7 @@ const Search = () => {
   return (
    <View style={styles.card}> 
   <FontAwesomeIcon icon={faSearch} style={styles.search} />
-  <TextInput style={styles['search-input']}  />
+  <TextInput style={styles['search-input']} placeholder="Seach" />
    </View>
   )
 }

@@ -3,7 +3,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MyProfile from '../MyProfile';
 import RestaurantsScreen from '../RestaurantsScreen';
 import Orders from '../Orders';
-import Tools from '../Tools';
+import Tools from '../Tools/Tools';
 import { collection, getDocs, getFirestore, query, where, doc, getDoc } from '@firebase/firestore';
 import { auth } from '../../config/firebase-config';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';

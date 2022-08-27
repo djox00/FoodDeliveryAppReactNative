@@ -1,29 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Alert, Button, Platform, StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
-import { TextInput } from "react-native";
-import { auth } from '../config/firebase-config';
-import { signInWithEmailAndPassword,  GoogleAuthProvider, setPersistence,  signInWithPopup, signInWithCredential } from 'firebase/auth';
-import Error from '../UI Components/Error';
-
-
+import React, { createRef, useEffect,  useState } from 'react'
+import { Alert, Button, Platform, StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from "react-native";
+import { auth } from '../../config/firebase-config';
+import { signInWithEmailAndPassword} from 'firebase/auth';
+import Error from '../../UI Components/Error';
 
 
 const Login = ({navigation}) => {
 
+ const [email, setemail] = useState(''); 
+ const [password, setpassword] = useState(''); 
    
+
 useEffect(() => {
-   /*  if(auth.currentUser!=null) */ navigation.navigate("Main"); 
+    if(auth.currentUser!=null) navigation.navigate("Main"); 
 }, [])
 
 
     const [error, seterror] = useState({message: '', status: false}); 
 
     const handleLogin = async (e, p) => {
-       
+        console.log(e);
         try {
-        
+         
           const user = await signInWithEmailAndPassword(auth, e, p);
-           console.log(user); 
+          
          seterror(()=>{return {message: '', status: false}}); 
          // setAdmin(); 
          navigation.navigate("Main"); 
@@ -35,42 +35,18 @@ useEffect(() => {
         }
       }
     
-    
-    
-      const handleLoginWithGoogle = async () => {
-       
-        try {
-
-           /*  const { idToken } = await GoogleSignin.signIn()
-
-            const googleCredential = GoogleAuthProvider.credential(idToken); 
-            
-            signInWithCredential(googleCredential);  */
-          
-           seterror(()=>{return {message: '', status: false}}); 
-            // setAdmin(); 
-         
-    
-        } catch (error) {
-         seterror(()=>{return {message: error.message, status: true}}); 
-        }
-            
-      }
-
-
-    const EmailRef = useRef(); 
-    const PasswordRef = useRef(); 
+      
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>   
         <View style={styles.container}>
             <View style={styles['login-form']}>
                 { error.status ? <Error message={error.message} /> : null}
-                <TextInput placeholder="enter you email" style={[styles['input-field'],{marginBottom: 20} ]} ref={EmailRef} />
-                <TextInput placeholder="enter you password" secureTextEntry={true} style={[styles['input-field'],{marginBottom: 50} ]} ref={PasswordRef} />
+                <TextInput placeholder="enter you email" style={[styles['input-field'],{marginBottom: 20} ]} onChangeText={(val)=> setemail(val)} />
+                <TextInput placeholder="enter you password" onChangeText={(val)=> setpassword(val)} secureTextEntry={true} style={[styles['input-field'],{marginBottom: 50} ]}  />
                 <View style={styles['align-center']}> 
 
-                <TouchableOpacity style={styles.button} title="Sign in" onPress={()=>handleLogin(EmailRef.current.value,PasswordRef.current.value)} ><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Login</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button} title="Sign in" onPress={()=>handleLogin(email,password)} ><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Login</Text></TouchableOpacity>
                 </View>
                 <Text style={{ marginVertical: 30, textAlign: "center", color: "#fff", fontWeight: "500" }} >Dont have an accout?</Text>
                 

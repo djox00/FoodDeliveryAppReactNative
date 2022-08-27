@@ -1,11 +1,8 @@
 import React, { Fragment, useState, useRef } from 'react'
 import {  Button, TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import BottomTabs from './Navigations/BottomTabs';
-import {auth} from '../config/firebase-config'; 
+
 const Main = ({navigation}) => {
-
-    console.log(auth.currentUser);
-
 
 
   return (

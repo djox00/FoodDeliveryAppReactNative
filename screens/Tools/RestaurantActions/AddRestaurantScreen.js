@@ -2,9 +2,14 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { collection, query, where, updateDoc, doc, getFirestore, getDocs } from "firebase/firestore";
 import Error from '../../../UI Components/Error';
+import { utils } from 'expo-firebase-app'; 
+import { getStorage } from 'firebase/storage'; 
+import ImageUploader from './ImageUploader';
+
+const AddRestaurantScreen = () => {
 
 
-const AddAdminScreen = () => {
+    const storage = getStorage(); 
 
     const [error, seterror] = useState({ message: '', status: false });
 
@@ -15,9 +20,6 @@ const AddAdminScreen = () => {
     const [uid, setuid] = useState('')
 
 
-    const updateAdmin = async () => {
-        const res = await updateDoc(doc(db, "Users", uid), { user: "admin" });
-    }
 
     const handleSubmit = async () => {
 
@@ -27,7 +29,7 @@ const AddAdminScreen = () => {
             const user = await getDocs(q);
 
             if (user.empty) seterror({ message: "no such Email found!", status: true });
-           
+
             user.forEach((doc) => {
                 setuid(doc.id);
             });
@@ -37,8 +39,6 @@ const AddAdminScreen = () => {
 
         }
 
-
-
         updateAdmin();
     }
 
@@ -47,16 +47,12 @@ const AddAdminScreen = () => {
         <View style={styles.container}>
             {error.status == true ? <Error message={error.message} /> : null}
             <ScrollView contentContainerStyle={styles.form}>
-                <Text style={{ textAlign: "justify", marginHorizontal: 40, fontWeight: "500", marginBottom: 40 }}>NOTE: Assigning admin role to a users may
-                    gains the user full access over the infrastructure. {"\n"}{"\n"}
-                    Admin permissions include: {"\n"}
-                    - Admin Tools {"\n"}
-                    - Restaurant Editing Tools {"\n"}
-                    - Other high privileged Tools
-                </Text>
-                <Text style={{ color: "gray" }}>Enter the email adress of the user</Text>
-                <TextInput style={[styles['input-field'], { marginBottom: 50 }]} onChangeText={(val) => setemail(val)} />
-
+                <ImageUploader />
+                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Restaurant name..." onChangeText={(val) => setemail(val)} />
+                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Owners email adress..." onChangeText={(val) => setemail(val)} />
+                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Restaurant adress..." onChangeText={(val) => setemail(val)} />
+                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Restaurant description..." onChangeText={(val) => setemail(val)} />
+                
                 <TouchableOpacity onPress={handleSubmit} style={styles.button} ><Text style={{ color: "white", textAlign: "center", fontWeight: "600" }}>Submit</Text></TouchableOpacity>
 
             </ScrollView>
@@ -64,7 +60,7 @@ const AddAdminScreen = () => {
     )
 }
 
-export default AddAdminScreen
+export default AddRestaurantScreen
 
 const styles = StyleSheet.create({
     container: {
@@ -80,9 +76,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flex: 1,
         marginTop: 50
-
-
-
     },
     'input-field': {
         backgroundColor: "#fff",

@@ -1,21 +1,21 @@
 import React from 'react'
-import { StyleSheet, Text,TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity  } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {faUtensils, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPencil, faUtensils  } from '@fortawesome/free-solid-svg-icons';
 
-const AddRestaurant = () => {
+const EditRestaurant = () => {
   return (
     <TouchableOpacity style={styles.card} >
 
 
 <FontAwesomeIcon icon={faUtensils} style={styles.icon} /> 
-<Text style={styles.text}><FontAwesomeIcon style={{color: "orange"}} icon={faPlus} />  Add Restaurant</Text>
+<Text style={styles.text}> <FontAwesomeIcon icon={faPencil} color="rgb(255, 211, 99)" />  Edit Restaurant</Text>
 
     </TouchableOpacity>
   )
 }
 
-export default AddRestaurant
+export default EditRestaurant
 
 
 
@@ -31,15 +31,13 @@ const styles = StyleSheet.create({
       height: 70,
       backgroundColor: "white",
       textAlign: "center",
-      marginVertical: 10,
-      
+      marginVertical: 10
   
     },
   icon: { 
     transform: [{scale: 1.2}],
-    color: "orange",
-    marginRight: 5
-    
+    marginRight: 3,
+    color: "rgb(255, 211, 99)"
   }, 
   text: { 
   fontWeight: "600",

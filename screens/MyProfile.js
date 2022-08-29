@@ -1,12 +1,12 @@
 import React, { Fragment, useState, useRef } from 'react'
-import {  Button, TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import { Button, TouchableOpacity, StyleSheet, Text, View } from "react-native";
 
 const MyProfile = () => {
-    
-  return (
-    <View style={styles.container}> 
 
-<Text> my profile</Text>
+  return (
+    <View style={styles.container}>
+
+      <Text> my profile</Text>
 
 
 
@@ -17,13 +17,14 @@ const MyProfile = () => {
 export default MyProfile
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor: "rgb(255, 211, 99)",
-        alignItems: "center",
-        height: "100%",
-        width: "100%"
-    }}); 
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "rgb(255, 211, 99)",
+    alignItems: "center",
+    height: "100%",
+    width: "100%"
+  }
+}); 

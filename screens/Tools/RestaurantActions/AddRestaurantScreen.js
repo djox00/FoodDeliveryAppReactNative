@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { collection, query, where, updateDoc, doc, getFirestore, getDocs } from "firebase/firestore";
 import Error from '../../../UI Components/Error';
-import { utils } from 'expo-firebase-app'; 
+
 import { getStorage } from 'firebase/storage'; 
 import ImageUploader from './ImageUploader';
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     form: {
         alignItems: "center",
         flex: 1,
-        marginTop: 50
+        marginTop: 20
     },
     'input-field': {
         backgroundColor: "#fff",

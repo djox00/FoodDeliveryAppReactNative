@@ -1,50 +1,64 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import { View } from 'react-native-web';
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faImage } from '@fortawesome/free-regular-svg-icons';
 
 const ImageUploader = () => {
-    useEffect(() => {
-        (async () => {
-          if (Platform.OS !== 'web') {
-            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status !== 'granted') {
-              alert('Sorry, we need camera roll permissions to make this work!');
-            }
-          }
-        })();
-      }, []);
+
+  const [image, setImage] = useState(null);
+  const [picked, setpicked] = useState(false);
+  const pickImage = async () => {
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
     
-      const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-        });
-    
-        if (!result.cancelled) {
-          const storage = getStorage(); //the storage itself
-          const ref = ref(storage, 'image.jpg'); //how the image will be addressed inside the storage
-    
-          //convert image to array of bytes
-          const img = await fetch(result.uri);
-          const bytes = await img.blob();
-    
-          await uploadBytes(ref, bytes); //upload images
-        }
-      };
-    
-      return (
-        <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center'}}>
-          <TouchableHighlight onPress={pickImage}>
-            <Text>select image</Text>
-          </TouchableHighlight>
-        </View>'expo-firebase-analytics
-      );
+    if (!result.cancelled) {
+      setImage(result.uri);
+      setpicked(true)
+    }
+  };
+
+
+  console.log(image);
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+      {!picked ?
+
+        <View style={{ textAlign: "center" }}>
+          <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center' }} ><FontAwesomeIcon style={ [styles.icon,{transform: [{ scale: 3 }]} ] } icon={faImage} /></TouchableOpacity>
+          <Text style={{ textAlign: 'center', marginTop: 25 }}>Select Image </Text>
+        </View> 
+        
+        :
+
+        <View style={{ textAlign: "center" }}>
+          <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center' }} ><FontAwesomeIcon style={ [styles.icon,{transform: [{ scale: 2 }]} ] } icon={faImage} /></TouchableOpacity>
+          <Text style={{ textAlign: 'center', marginTop: 10 }}>Change Image</Text>
+        </View>
+
+      }
+
+      {image && <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />}
+    </View>
+  );
 }
 
+
 export default ImageUploader
+
+const styles = StyleSheet.create({
+icon:{ 
+  color: "#694fad",
+   textAlign: 'center',
+    marginLeft: "auto",
+     marginRight: "auto",
+}
+
+
+}); 

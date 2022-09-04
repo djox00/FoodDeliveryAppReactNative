@@ -3,8 +3,11 @@ import { Button, Image, View, Platform, TouchableOpacity, Text, StyleSheet } fro
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
+import { storage } from '../../../config/firebase-config';
+import { getDatabase, ref, onValue } from 'firebase/database';
 
-const ImageUploader = () => {
+
+const ImageUploader = ({setImageuri}) => {
 
   const [image, setImage] = useState(null);
   const [picked, setpicked] = useState(false);
@@ -16,29 +19,29 @@ const ImageUploader = () => {
       aspect: [4, 3],
       quality: 1,
     });
-    
+
     if (!result.cancelled) {
       setImage(result.uri);
+      setImageuri(result.uri); 
       setpicked(true)
     }
   };
 
 
-  console.log(image);
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
       {!picked ?
 
         <View style={{ textAlign: "center" }}>
-          <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center' }} ><FontAwesomeIcon style={ [styles.icon,{transform: [{ scale: 3 }]} ] } icon={faImage} /></TouchableOpacity>
+          <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center' }} ><FontAwesomeIcon style={[styles.icon, { transform: [{ scale: 3 }] }]} icon={faImage} /></TouchableOpacity>
           <Text style={{ textAlign: 'center', marginTop: 25 }}>Select Image </Text>
-        </View> 
-        
+        </View>
+
         :
 
         <View style={{ textAlign: "center" }}>
-          <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center' }} ><FontAwesomeIcon style={ [styles.icon,{transform: [{ scale: 2 }]} ] } icon={faImage} /></TouchableOpacity>
+          <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center' }} ><FontAwesomeIcon style={[styles.icon, { transform: [{ scale: 2 }] }]} icon={faImage} /></TouchableOpacity>
           <Text style={{ textAlign: 'center', marginTop: 10 }}>Change Image</Text>
         </View>
 
@@ -53,12 +56,12 @@ const ImageUploader = () => {
 export default ImageUploader
 
 const styles = StyleSheet.create({
-icon:{ 
-  color: "#694fad",
-   textAlign: 'center',
+  icon: {
+    color: "#694fad",
+    textAlign: 'center',
     marginLeft: "auto",
-     marginRight: "auto",
-}
+    marginRight: "auto",
+  }
 
 
 }); 

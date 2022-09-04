@@ -1,12 +1,17 @@
 import React, { Fragment, useState, useRef } from 'react'
 import { Button, TouchableOpacity, StyleSheet, Text, View } from "react-native";
-
+import { signOut } from 'firebase/auth';
+import { auth } from '../config/firebase-config';
 const MyProfile = () => {
+
+const logOut = async () =>{ 
+  await signOut(auth); 
+}
 
   return (
     <View style={styles.container}>
 
-      <Text> my profile</Text>
+   <Button onPress={logOut} title='Logout' /> 
 
 
 

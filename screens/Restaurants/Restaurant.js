@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity  } from "react-native";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
-const Restaurant = ({restaurant_data, navigation}) => {
+const Restaurant = ({restaurant_data, navigation, forMenu}) => {
 
  
   const [imgURL, setimgURL] = useState(''); 
@@ -11,13 +11,16 @@ const Restaurant = ({restaurant_data, navigation}) => {
 
 const getImageFromStorage = async () =>{ 
   const storage = getStorage();
-  const imgRef = ref(storage, 'Sarajka/sarajka.jpg');
+  const imgRef = ref(storage, restaurant_data.id  + '/' + restaurant_data.restaurant_name );
 const url = await getDownloadURL(imgRef); 
 setimgURL(url); 
 }
 
-
+useEffect(() => {
   getImageFromStorage(); 
+}, [])
+
+  
 
 
  
@@ -25,7 +28,7 @@ setimgURL(url);
   return (
     <Fragment> 
 
-     <TouchableOpacity  style={styles.card} onPress={()=>navigation.navigate("RestaurantSingle",{restaurant_data})}  > 
+     <TouchableOpacity  style={styles.card} onPress={()=>   forMenu ?  navigation.navigate("AddMenuScreen",{restaurant_data})  : navigation.navigate("RestaurantSingle",{restaurant_data})                }  > 
        <View style={{width: "30%"}}>
           <Image source={{uri: imgURL}} style={{width: 70, height: 70}} />
 
@@ -38,7 +41,7 @@ setimgURL(url);
 
        <Text>{restaurant_data.restaurant_adress}</Text>
 
-       <Text>Aleja bla bla bla</Text>
+       <Text>{restaurant_data.restaurant_description}</Text>
        </View>
 
      </TouchableOpacity >
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 20,
         overflow:"hidden",
-        marginVertical: 15,
+        marginVertical: 15
       
         
     }, 

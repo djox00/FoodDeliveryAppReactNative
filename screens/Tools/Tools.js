@@ -6,6 +6,8 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import ToolsMenu from './ToolsMenu';
 import AddAdminScreen from './AdminActions/AddAdminScreen'
 import AddRestaurantScreen from './RestaurantActions/AddRestaurantScreen';
+import AddMenuScreen from './RestaurantActions/AddMenuScreen';
+import ShowMyRestaurants from '../Restaurants/ShowMyRestaurants';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -29,6 +31,8 @@ const Tools = ({ navigation }) => {
         <Stack.Screen name="ToolsMenu" component={ToolsMenu} options={{ headerLeft: () => null, headerShown: false }} />
         <Stack.Screen name="AddAdminScreen" component={AddAdminScreen} options={{ headerLeft: () => null, headerShown: false }} />
         <Stack.Screen name="AddRestaurantScreen" component={AddRestaurantScreen} options={{ headerLeft: () => null, headerShown: false }} />
+        <Stack.Screen name="AddMenuScreen" component={AddMenuScreen} options={{ headerLeft: () => null, headerShown: false }} />
+        <Stack.Screen name="ShowMyRestaurants" component={ShowMyRestaurants} options={{ headerLeft: () => null, headerShown: false }} />
       </Stack.Navigator>
 
 

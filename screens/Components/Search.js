@@ -12,6 +12,9 @@ const Search = () => {
   )
 }
 
+
+
+
 export default Search
 
 const styles = StyleSheet.create({
@@ -29,11 +32,13 @@ card: {
     flex: 1,
     padding: 15,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     alignItems: 'flex-start',
     borderRadius: 50,
     marginTop: 10,
     marginBottom: 10,
-    overflow: "hidden"
+    overflow: "hidden", 
+
 
 },
 search: {

@@ -11,11 +11,6 @@ const Login = ({navigation}) => {
  const [password, setpassword] = useState(''); 
    
 
-useEffect(() => {
-    /* if(auth.currentUser!=null) */ navigation.navigate("Main"); 
-}, [])
-
-
     const [error, seterror] = useState({message: '', status: false}); 
 
     const handleLogin = async (e, p) => {
@@ -40,8 +35,9 @@ useEffect(() => {
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>   
         <View style={styles.container}>
+        { error.status ? <Error message={error.message} /> : null}
             <View style={styles['login-form']}>
-                { error.status ? <Error message={error.message} /> : null}
+                
                 <TextInput placeholder="enter you email" style={[styles['input-field'],{marginBottom: 20} ]} onChangeText={(val)=> setemail(val)} />
                 <TextInput placeholder="enter you password" onChangeText={(val)=> setpassword(val)} secureTextEntry={true} style={[styles['input-field'],{marginBottom: 50} ]}  />
                 <View style={styles['align-center']}> 

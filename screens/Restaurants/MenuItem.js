@@ -1,42 +1,87 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Text, View, Button, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import RNPickerSelect from "react-native-picker-select";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getFirestore, setDoc, collection, doc, getDoc, addDoc, serverTimestamp } from '@firebase/firestore';
+import { auth } from '../../config/firebase-config';
 
 
-const MenuItem = ({ item, restaurant_id }) => {
+const MenuItem = ({ item, restaurant_id, restaurant_name }) => {
 
+  let food_data = item;
   let prices = item?.food?.food_price;
+  let food_id = item?.id; 
+  
+  const db = getFirestore(); 
 
-
-  console.log(item);
-
-
-  const [price, setprice] = useState(0);
+  const [ViewFoodDetails, setViewFoodDetails] = useState(100); 
+  const [SelectedFood, setSelectedFood] = useState({portion: "", price: 0});
 
   const [imgURL, setimgURL] = useState('');
   const getImageFromStorage = async () => {
     const storage = getStorage();
-    const imgRef = ref(storage, `Sarajka/${item?.food?.img_tag}`);  /* const imgRef = ref(storage, `${restaurant_id}/${item?.food?.img_tag}`); */
+    const imgRef = ref(storage, restaurant_id + "/" + food_id);  
     const url = await getDownloadURL(imgRef);
     setimgURL(url);
   }
 
-
-
+useEffect(() => {
   getImageFromStorage();
+}, [])
 
 
 
+const handleViewDetails = () =>{ 
+if(ViewFoodDetails == 100) 
+  setViewFoodDetails(180); 
+if(ViewFoodDetails == 180) 
+setViewFoodDetails(100); 
+}
+
+
+const handleAddToOrders = async () =>{ 
+
+
+
+const user = await getDoc(doc(db,"Users",auth.currentUser.uid)); 
+const user_data = user.data(); 
+
+const OrdersRef = collection(db,"Orders")
+
+if(SelectedFood.price!= 0) {  
+
+const response = await addDoc(OrdersRef,{
+    user_id: auth.currentUser.uid, 
+    first_name: user_data.first_name, 
+    last_name: user_data.last_name, 
+    adress: user_data.adress,
+    phone: user_data.phone, 
+    order:{ 
+    restaurant_id: restaurant_id, 
+    restaurant_name: restaurant_name,
+    food_id: food_id, 
+    food_name: food_data.food.food_name,
+    portion: SelectedFood.portion, 
+    price: SelectedFood.price, 
+    Delivered: false
+    }, 
+    ordered: serverTimestamp()
+  
+  });} 
+
+
+}
 
 
   return (
     <Fragment>
-      <View style={styles.card}>
+    
+      <View style={[styles.card,{height: ViewFoodDetails}]}>
 
-
-        <View style={{ textAlign: "center", marginRight: 10 }}>
+        <View style={{ textAlign: "center", marginRight: 10, marginTop: 10 }}>
+          <TouchableOpacity onPress={handleViewDetails}> 
           <Image source={{ uri: imgURL != null && imgURL != ""? imgURL : "http://www.fnfmetal.com/uploads/products/1311-product_Mp8wDrKX.jpg" }} style={{ width: 70, height: 70, borderRadius: 10 }} />
+          </TouchableOpacity>
           <Text style={{ color: "white", textAlign: "center" }}>{item?.food?.food_name}</Text>
         </View>
 
@@ -44,16 +89,16 @@ const MenuItem = ({ item, restaurant_id }) => {
 
         <View style={{ textAlign: "center", alignSelf: "center",marginRight: 2 }}>
           <RNPickerSelect
-            onValueChange={(value) => setprice(value)}
+            onValueChange={(value) => setSelectedFood(value)}
             placeholder={{ label: "Odaberi porciju..", value: 0 }}
             style={pickerSelectStyles}
             useNativeAndroidPickerStyle={false}
 
             items={[
 
-              (prices?.Mala !== null && prices?.Mala != undefined) ? { label: "Mala porcija", value: Number(prices?.Mala) } : {},
-              (prices?.Srednja !== null && prices?.Srednja != undefined) ? { label: "Srednja porcija", value: Number(prices?.Srednja) } : {},
-              (prices?.Velika !== null && prices?.Velika != undefined) ? { label: "Velika porcija", value: Number(prices?.Velika) } : {}
+              (prices?.Mala !== null && prices?.Mala != undefined) ? { label: "Mala porcija", value: { portion: "Mala", price: Number(prices?.Mala) } } : {},
+              (prices?.Srednja !== null && prices?.Srednja != undefined) ? { label: "Srednja porcija", value: {  portion: "Srednja", price: Number(prices?.Srednja)} } : {},
+              (prices?.Velika !== null && prices?.Velika != undefined) ? { label: "Velika porcija", value: {  portion: "Velika", price : Number(prices?.Velika)} } : {}
 
 
             ]}
@@ -62,22 +107,22 @@ const MenuItem = ({ item, restaurant_id }) => {
 
 
         <View style={{ textAlign: "center", alignSelf: "center" }}>
-          <Text style={{ marginBottom: "auto", marginTop: "auto", color: "white" }}> {price + "€"}  </Text>
+          <Text style={{ marginBottom: "auto", marginTop: "auto", color: "white" }}> {SelectedFood.price + "€"}  </Text>
         </View>
 
 
         <View style={{ textAlign: "center", alignSelf: "center" }}>
-          <TouchableOpacity style={{ marginBottom: "auto", marginTop: "auto", backgroundColor: "white", borderRadius: 1, padding: 5 }} ><Text>Add</Text></TouchableOpacity>
+          <TouchableOpacity onPress={handleAddToOrders} style={{ marginBottom: "auto", marginTop: "auto", backgroundColor: "white", borderRadius: 5, padding: 10 }} ><Text>Add</Text></TouchableOpacity>
         </View>
 
-
+        {food_data.food.food_description != null && food_data.food.food_description != ""  ?  <Text style={{color: "white"}}> Opis jela: {food_data.food.food_description}</Text> : null }
 
       </View>
     </Fragment>
   )
 }
 
-export default MenuItem
+export default React.memo(MenuItem)
 
 
 const styles = StyleSheet.create({
@@ -86,11 +131,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    alignContent: "center",
     justifyContent: "center",
     overflow: "hidden",
-    height: 100,
     backgroundColor: "#694fad",
+    marginBottom: 10, 
+    height: 120
+  
 
   },
   item: {

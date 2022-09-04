@@ -1,16 +1,16 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react'
-import { Button, TouchableOpacity, StyleSheet, Text, View, ScrollView, FlatList, Animated, SafeAreaView } from "react-native";
-import BottomTabs from './Navigations/BottomTabs';
-import Restaurant from './Restaurants/Restaurant';
-import Search from './Components/Search';
+import { Button, TouchableOpacity, StyleSheet, Text, View, ScrollView, Animated } from "react-native";
+import BottomTabs from '../Navigations/BottomTabs';
+import Restaurant from './Restaurant';
+import Search from '../Components/Search';
 import { getFirestore } from '@firebase/firestore';
 import { collection, getDocs, doc, query, getDoc } from '@firebase/firestore';
+import { useFirestoreQuery } from '../Custom Functions/Hooks';
+
 
 const RestaurantsScreen = ({ navigation }) => {
 
 
-
-  console.log
 
 const scrollY = new Animated.Value(0); 
 const diffClamp = Animated.diffClamp(scrollY,0,60); 
@@ -19,24 +19,13 @@ const translateY = diffClamp.interpolate({inputRange:[0,60], outputRange:[0,-60]
 
 const db = getFirestore(); 
 
-const [restaurants, setrestaurants] = useState([]); 
+
+const RestaurantRef = collection(db,"Restaurants"); 
+const q = query(RestaurantRef); 
+const restaurants = useFirestoreQuery(q); 
 
 
 
-
-
-const getRestaurants = async ()=>{ 
-  let rest = []; 
-  const response = await getDocs(collection(db,"Restaurants")); 
-  response.forEach((doc)=>  rest = [...rest, {...doc.data(), id: doc.id}]); 
-  setrestaurants(rest); 
-}
-useEffect(() => {
-  getRestaurants();
-
-}, [])
-
-console.log(restaurants); 
 let restaurants_arry = restaurants.map((restaurant)=> <Restaurant key={Math.random() /* add id to Restaurants or get the document id */ }   navigation={navigation} restaurant_data={restaurant}  />)
 
 
@@ -52,7 +41,7 @@ let restaurants_arry = restaurants.map((restaurant)=> <Restaurant key={Math.rand
        scrollY.setValue( e.nativeEvent.contentOffset.y); 
       }} >
           <Animated.View style={{transform : [{translateY: translateY}], elevation: 4,  zIndex: 100, marginBottom: 50  }}> 
-     <Search />
+    {restaurants_arry!= null && restaurants_arry != ""  ? <Search  />: null  } 
      </Animated.View>
      
 {restaurants_arry}
@@ -77,7 +66,8 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   scrollview : {
-  top: 25,
+  top: 0,
+  bottom: 25,
    position: "relative",
     width: "90%",
     marginHorizontal: "5%"

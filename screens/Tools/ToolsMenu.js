@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import AddAdmin from './AdminActions/AddAdmin';
 import AddRestaurant from './RestaurantActions/AddRestaurant';
 import EditRestaurant from './RestaurantActions/EditRestaurant';
-import AddAdminScreen from './AdminActions/AddAdminScreen'
+import AddToMenu from './RestaurantActions/AddToMenu';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -20,8 +20,9 @@ const ToolsMenu = ({ navigation }) => {
 
         <AddAdmin navigation={navigation} />
         <AddRestaurant navigation={navigation} />
+        <AddToMenu navigation={navigation} />
         <EditRestaurant navigation={navigation} />
-
+        
       </View>
     </Fragment>
   )

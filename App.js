@@ -1,5 +1,5 @@
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,13 +9,17 @@ import Main from "./screens/Main";
 import { StatusBar } from "react-native";
 
 import RestaurantSingle from "./screens/Restaurants/RestaurantSingle";
+import { auth } from "./config/firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function App() {
 
-  
+const [User, setUser] = useState(null); 
 
-
-
+onAuthStateChanged(auth,(currentUser)=>
+setUser(currentUser)
+); 
+console.log(User); 
 
   const Stack = createNativeStackNavigator();
   return (
@@ -33,17 +37,21 @@ export default function App() {
 
         }}>
 
-          
 
 
-          <Stack.Screen name="Login" component={Login} options={{ title: 'Sign in' }} />
+          {User != null ?
 
-          <Stack.Screen name="Main" component={Main} options={{ headerLeft: () => null, headerShown: false }} />
-
-          <Stack.Screen name="Register" component={Register} />
-
-          <Stack.Screen name="RestaurantSingle" component={RestaurantSingle} />
-
+            <>
+              <Stack.Screen name="Main" component={Main} options={{ headerLeft: () => null, headerShown: false }} />
+              <Stack.Screen name="RestaurantSingle" component={RestaurantSingle} />
+            </>
+            :
+            <>
+             <Stack.Screen name="Login" component={Login} options={{ title: 'Sign in' }} />
+              <Stack.Screen name="Register" component={Register} />
+             
+            </>
+          }
 
 
         </Stack.Navigator>

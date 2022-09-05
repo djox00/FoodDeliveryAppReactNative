@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import {onSnapshot } from "firebase/firestore";
 
-export function useFirestoreQuery(query) {
+export function useFirestoreQuery(query,refresh) {
     const [docs, setDocs] = useState([]);
   
  
@@ -30,7 +30,7 @@ export function useFirestoreQuery(query) {
       });
   
       return unsubscribe;
-    }, [queryRef]);
+    }, [queryRef,refresh]);
   
     return docs;
   }

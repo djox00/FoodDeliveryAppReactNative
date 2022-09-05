@@ -51,7 +51,6 @@ const handleSubmit = async () => {
      food_id = food_menu_array.length + 1; 
      }
      
-
 const menu_reshape = Object.assign(menu, {   [food_id] : {food_name: menu_data.food_name, 
     food_description: menu_data.food_description,
     food_price: {Mala: food_price.Mala, 

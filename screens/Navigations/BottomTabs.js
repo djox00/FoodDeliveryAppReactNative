@@ -7,6 +7,7 @@ import Tools from '../Tools/Tools';
 import { collection, getDocs, getFirestore, query, where, doc, getDoc } from '@firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser, faGear, faCartShopping, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { auth } from '../../config/firebase-config';
 
 
 
@@ -22,9 +23,16 @@ const db  = getFirestore();
 
 const checkUserType =  async ()  =>{
 
-  const user = await getDoc(doc(db,"Users","MVn0Ssw7CXZTalXTsdg6zDfgobm2")); 
-  const usertype = await user.data(); 
-  setuserType(usertype.user); 
+  try {
+    const user = await getDoc(doc(db,"Users",auth.currentUser.uid)); 
+    const usertype = await user.data(); 
+    setuserType(usertype.user); 
+    
+  } catch (error) {
+    
+  }
+
+
 
 }
 
@@ -44,8 +52,8 @@ useEffect(() => {
     barStyle={{ backgroundColor: '#694fad', }}>
         
     <Tab.Screen name="Restaurants"  options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUtensils} />}} component={RestaurantsScreen} /> 
-    <Tab.Screen name="OrdersScreen" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faCartShopping} />}} component={OrdersScreen} /> 
-    {userType == "user" ? <Tab.Screen name="Tools"  options={{tabBarIcon: ()=><FontAwesomeIcon   style={{color: "white"}} icon={faGear} />}}   component={Tools}  /> : null}
+    <Tab.Screen name="Orders" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faCartShopping} />}} component={OrdersScreen} /> 
+    { (userType == "admin" || userType == "restaurant_owner"  )? <Tab.Screen name="Tools"  options={{tabBarIcon: ()=><FontAwesomeIcon   style={{color: "white"}} icon={faGear} />}}   component={Tools}  /> : null}
     <Tab.Screen name="My profile" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUser} />}}  component={MyProfile}  /> 
     
 

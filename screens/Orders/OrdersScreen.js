@@ -13,9 +13,8 @@ const OrdersScreen = () => {
 const db = getFirestore(); 
   const RestaurantRef = collection(db,"Orders"); 
   const q = query(RestaurantRef, where("user_id", "==", auth.currentUser.uid)); 
-  const orders = useFirestoreQuery(q); 
-  
-  let orders_output = orders.map((order) =>   <Order order_data={order} /> )
+  let orders = useFirestoreQuery(q); 
+  let orders_output = orders.map((order) =>   <Order key={order.id} order_data={order} /> )
 
   return (
     <View style={styles.container}> 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native'
-import { collection, query, where, doc, getFirestore, getDocs, getDoc, setDoc, addDoc } from "firebase/firestore";
+import { collection, query, where, doc, getFirestore, getDocs, addDoc, updateDoc } from "firebase/firestore";
 import Error from '../../../UI Components/Error';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import ImageUploader from './ImageUploader';
@@ -63,6 +63,8 @@ const AddRestaurantScreen = ({navigation}) => {
                 restaurant_owner: uid
             });
          
+            const user_to_restaurant_owner = await updateDoc(doc(db, "Users", uid), { user: "restaurant_owner" });
+
             const image_upload_response = await uploadImage(Imageuri, restaurant_data.restaurant_name, restaurant_response.id);
             setloading(false); 
             setrestaurant_added({restaurant_id: restaurant_response.id }); 

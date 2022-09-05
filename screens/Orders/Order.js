@@ -6,17 +6,34 @@ import { getFirestore, setDoc, collection, doc, getDoc, addDoc, serverTimestamp 
 const Order = ({order_data}) => {
 
 const [imgURL, setimgURL] = useState(null); 
+const [input_date, setinput_date] = useState(0); 
+const [update, setupdate] = useState(false); 
 
 const getImageFromStorage = async () => {
+
+try {
   const storage = getStorage();
   const imgRef = ref(storage, order_data.order.restaurant_id + "/" + order_data.order.restaurant_name);  
   const url = await getDownloadURL(imgRef);
   setimgURL(url);
+
+} catch (error) {
+  
 }
 
+  
+}
+
+
+let date; 
 useEffect(() => {
+
+  date = order_data.ordered; 
+  if(date != null ){  
+    setinput_date( date.toDate()); 
+}
 getImageFromStorage();
-}, [])
+}, [order_data])
 
 
 function millisToMinutes(millis) {
@@ -25,13 +42,13 @@ function millisToMinutes(millis) {
   return minutes; 
 }
 
-
-let date_now = new Date(); 
-let date = order_data.ordered; 
-date = date.toDate(); 
-const ordered_before = millisToMinutes(Math.abs(date_now - date));
+var date_now = new Date(); 
+let order_date =  millisToMinutes(Math.abs(date_now - input_date)); 
 
 
+setInterval(()=>{
+  setupdate((curr)=>!curr); 
+},60000)
 
   return (
     <Fragment>
@@ -49,7 +66,7 @@ const ordered_before = millisToMinutes(Math.abs(date_now - date));
 
         <View style={{ textAlign: "center", alignSelf: "center",marginRight: 2 }}>
           <Text  style={{ color: "white", textAlign: "left" }}>Pljeskavica {"\n"}</Text>
-          <Text  style={{ color: "white", textAlign: "left" }}>Ordered: {ordered_before}min ago</Text>
+          <Text  style={{ color: "white", textAlign: "left" }}>Ordered: {order_date} min ago</Text>
         </View>
 
 

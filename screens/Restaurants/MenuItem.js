@@ -19,10 +19,19 @@ const MenuItem = ({ item, restaurant_id, restaurant_name }) => {
 
   const [imgURL, setimgURL] = useState('');
   const getImageFromStorage = async () => {
-    const storage = getStorage();
-    const imgRef = ref(storage, restaurant_id + "/" + food_id);  
-    const url = await getDownloadURL(imgRef);
-    setimgURL(url);
+
+try {
+  const storage = getStorage();
+  const imgRef = ref(storage, restaurant_id + "/" + food_id);  
+  const url = await getDownloadURL(imgRef);
+  setimgURL(url);
+  
+} catch (error) {
+  
+}
+   
+
+
   }
 
 useEffect(() => {
@@ -41,9 +50,8 @@ setViewFoodDetails(100);
 
 const handleAddToOrders = async () =>{ 
 
-
-
-const user = await getDoc(doc(db,"Users",auth.currentUser.uid)); 
+try {
+  const user = await getDoc(doc(db,"Users",auth.currentUser.uid)); 
 const user_data = user.data(); 
 
 const OrdersRef = collection(db,"Orders")
@@ -69,6 +77,11 @@ const response = await addDoc(OrdersRef,{
   
   });} 
 
+  
+} catch (error) {
+  
+}
+
 
 }
 
@@ -80,7 +93,7 @@ const response = await addDoc(OrdersRef,{
 
         <View style={{ textAlign: "center", marginRight: 10, marginTop: 10 }}>
           <TouchableOpacity onPress={handleViewDetails}> 
-          <Image source={{ uri: imgURL != null && imgURL != ""? imgURL : "http://www.fnfmetal.com/uploads/products/1311-product_Mp8wDrKX.jpg" }} style={{ width: 70, height: 70, borderRadius: 10 }} />
+          <Image source={{ uri: imgURL ? imgURL : "http://www.fnfmetal.com/uploads/products/1311-product_Mp8wDrKX.jpg" }} style={{ width: 70, height: 70, borderRadius: 10 }} />
           </TouchableOpacity>
           <Text style={{ color: "white", textAlign: "center" }}>{item?.food?.food_name}</Text>
         </View>

@@ -22,7 +22,7 @@ const restaurants = useFirestoreQuery(q);
 
 
 
-let restaurants_arry = restaurants.map((restaurant)=> <Restaurant forMenu={true} key={Math.random()  }   navigation={navigation} restaurant_data={restaurant}  />)
+let restaurants_arry = restaurants.map((restaurant)=> <Restaurant forMenu={true} key={restaurant.id}   navigation={navigation} restaurant_data={restaurant}  />)
 
 
   return (

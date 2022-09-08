@@ -32,8 +32,6 @@ const checkUserType =  async ()  =>{
     
   }
 
-
-
 }
 
 useEffect(() => {
@@ -53,7 +51,7 @@ useEffect(() => {
         
     <Tab.Screen name="Restaurants"  options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUtensils} />}} component={RestaurantsScreen} /> 
     <Tab.Screen name="Orders" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faCartShopping} />}} component={OrdersScreen} /> 
-    { (userType == "admin" || userType == "restaurant_owner"  )? <Tab.Screen userType={userType} name="Tools"  options={{tabBarIcon: ()=><FontAwesomeIcon   style={{color: "white"}} icon={faGear} />}}   component={Tools}  /> : null}
+    { (userType == "admin" || userType == "restaurant_owner"  )? <Tab.Screen name="Tools"  options={{tabBarIcon: ()=><FontAwesomeIcon   style={{color: "white"}} icon={faGear} />}}   component={Tools}  /> : null}
     <Tab.Screen name="My profile" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUser} />}}  component={MyProfile}  /> 
     
 

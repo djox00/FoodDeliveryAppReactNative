@@ -2,21 +2,16 @@ import React,{ useState } from 'react'
 import {  Button, TouchableOpacity, StyleSheet, Text, View, TextInput } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useSearchDebounce } from '../Custom Functions/Hooks';
 
 
+const Search = ({setSearchText}) => {
 
-const Search = ({setSearchRestaurant}) => {
-
-    const [SearchText, setSearchText] = useState(''); 
-
-    const handleSubmit = () =>{ 
-        setSearchRestaurant(SearchText); 
-    }
 
   return (
    <View style={styles.card}> 
   <FontAwesomeIcon icon={faSearch} style={styles.search} />
-  <TextInput onSubmitEditing={event=> setSearchRestaurant(event.nativeEvent.text) } onChangeText={(val)=>setSearchText(val)} style={styles['search-input']} placeholder="Seach" />
+  <TextInput onChangeText={(val) => setSearchText( ()=> val  )}  style={styles['search-input']} placeholder="Seach" />
    </View>
   )
 }

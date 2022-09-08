@@ -1,6 +1,6 @@
 
 import React, { Fragment } from 'react'
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View  } from "react-native";
 import AddAdmin from './AdminActions/AddAdmin';
 import AddRestaurant from './RestaurantActions/AddRestaurant';
 import EditRestaurant from './RestaurantActions/EditRestaurant';
@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 
-const ToolsMenu = ({ navigation }) => {
+const ToolsMenu = ({ navigation, userType }) => {
 
 
   const Stack = createNativeStackNavigator();
@@ -18,8 +18,8 @@ const ToolsMenu = ({ navigation }) => {
     <Fragment>
       <View style={styles.container}>
 
-        <AddAdmin navigation={navigation} />
-        <AddRestaurant navigation={navigation} />
+       {userType == 'admin' ? <AddAdmin navigation={navigation} /> : null }
+       {userType == 'admin' ? <AddRestaurant navigation={navigation} /> : null }
         <AddToMenu navigation={navigation} />
         <EditRestaurant navigation={navigation} />
         

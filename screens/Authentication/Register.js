@@ -55,7 +55,7 @@ const {first_name, last_name, email, password, conf_password, adress, phone} = u
 
 }catch(err) {
 
-    console.log(err); 
+   
 
     seterror(()=>{return {message: error.message, status: true}});  
 

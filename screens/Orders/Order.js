@@ -1,9 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Text, View,  StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { getFirestore, setDoc, collection, doc, getDoc, addDoc, serverTimestamp } from '@firebase/firestore';
+import { getFirestore, setDoc, collection, doc, getDoc, deleteDoc } from '@firebase/firestore';
 
-const Order = ({order_data}) => {
+
+const Order = ({order_data,setModalVisible}) => {
+
+  const db = getFirestore(); 
 
 const [imgURL, setimgURL] = useState(null); 
 const [input_date, setinput_date] = useState(0); 
@@ -23,6 +26,23 @@ try {
 
   
 }
+
+
+
+const handleDelivered = async () =>{ 
+  
+try {
+const add_response = await setDoc(doc(db,"DeliveredOrders",order_data.id),order_data); 
+
+await deleteDoc(doc(db,"Orders",order_data.id));  
+  setModalVisible(()=>{return{visible: true, order_id:order_data.id}}); 
+
+} catch (err) {
+  
+}
+}
+
+
 
 
 let date; 
@@ -72,7 +92,7 @@ setInterval(()=>{
 
 
         <View style={{ textAlign: "center", alignSelf: "center" }}>
-          <TouchableOpacity  style={{ marginBottom: "auto", marginTop: "auto", backgroundColor: "white", marginLeft: 25, borderRadius: 20, padding: 15 }} ><Text>Delivered</Text></TouchableOpacity>
+          <TouchableOpacity onPress={handleDelivered}  style={{ marginBottom: "auto", marginTop: "auto", backgroundColor: "white", marginLeft: 25, borderRadius: 20, padding: 15 }} ><Text>Delivered</Text></TouchableOpacity>
         </View>
 
        

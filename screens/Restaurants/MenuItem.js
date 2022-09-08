@@ -109,9 +109,9 @@ const response = await addDoc(OrdersRef,{
 
             items={[
 
-              (prices?.Mala !== null && prices?.Mala != undefined) ? { label: "Mala porcija", value: { portion: "Mala", price: Number(prices?.Mala) } } : {},
-              (prices?.Srednja !== null && prices?.Srednja != undefined) ? { label: "Srednja porcija", value: {  portion: "Srednja", price: Number(prices?.Srednja)} } : {},
-              (prices?.Velika !== null && prices?.Velika != undefined) ? { label: "Velika porcija", value: {  portion: "Velika", price : Number(prices?.Velika)} } : {}
+              (prices?.Mala !== null && prices?.Mala != undefined) ? { label: "Mala porcija", value: { portion: "Mala", price: prices?.Mala } } : {},
+              (prices?.Srednja !== null && prices?.Srednja != undefined) ? { label: "Srednja porcija", value: {  portion: "Srednja", price: prices?.Srednja} } : {},
+              (prices?.Velika !== null && prices?.Velika != undefined) ? { label: "Velika porcija", value: {  portion: "Velika", price : prices?.Velika} } : {}
 
 
             ]}
@@ -128,7 +128,7 @@ const response = await addDoc(OrdersRef,{
           <TouchableOpacity onPress={handleAddToOrders} style={{ marginBottom: "auto", marginTop: "auto", backgroundColor: "white", borderRadius: 5, padding: 10 }} ><Text>Add</Text></TouchableOpacity>
         </View>
 
-        {food_data.food.food_description != null && food_data.food.food_description != ""  ?  <Text style={{color: "white"}}> Opis jela: {food_data.food.food_description}</Text> : null }
+        {food_data.food.food_description != null && food_data.food.food_description != ""  ?  <Text style={{color: "white"}}>       Opis jela: {food_data.food.food_description}</Text> : null }
 
       </View>
     </Fragment>
@@ -140,7 +140,6 @@ export default React.memo(MenuItem)
 
 const styles = StyleSheet.create({
   card: {
-    flex: 0.2,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
@@ -191,13 +190,11 @@ const pickerSelectStyles = StyleSheet.create({
     fontSize: 13,
     paddingHorizontal: 6,
     paddingVertical: 8,
-    marginVertical: 5,
     borderWidth: 0.5,
     borderColor: '#694fad',
     borderRadius: 8,
     color: 'black',
-    paddingRight: 20,
-    alignContent: "center",
+    paddingRight: 30,
     marginTop: "auto",
     marginBottom: "auto",
     backgroundColor: "white"

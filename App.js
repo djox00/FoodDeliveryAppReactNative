@@ -19,7 +19,6 @@ const [User, setUser] = useState(null);
 onAuthStateChanged(auth,(currentUser)=>
 setUser(currentUser)
 ); 
-console.log(User); 
 
   const Stack = createNativeStackNavigator();
   return (

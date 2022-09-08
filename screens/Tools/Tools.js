@@ -12,7 +12,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 
-const Tools = ({ navigation }) => {
+const Tools = ({ navigation, userType }) => {
 
 
   const Stack = createNativeStackNavigator();
@@ -28,7 +28,7 @@ const Tools = ({ navigation }) => {
 
 
       }}>
-        <Stack.Screen name="ToolsMenu" component={ToolsMenu} options={{ headerLeft: () => null, headerShown: false }} />
+        <Stack.Screen name="ToolsMenu" userType={userType} component={ToolsMenu} options={{ headerLeft: () => null, headerShown: false }} />
         <Stack.Screen name="AddAdminScreen" component={AddAdminScreen} options={{ headerLeft: () => null, headerShown: false }} />
         <Stack.Screen name="AddRestaurantScreen" component={AddRestaurantScreen} options={{ headerLeft: () => null, headerShown: false }} />
         <Stack.Screen name="AddMenuScreen" component={AddMenuScreen} options={{ headerLeft: () => null, headerShown: false }} />

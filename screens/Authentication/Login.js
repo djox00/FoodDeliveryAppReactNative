@@ -14,7 +14,7 @@ const Login = ({navigation}) => {
     const [error, seterror] = useState({message: '', status: false}); 
 
     const handleLogin = async (e, p) => {
-        console.log(e);
+        
         try {
          
           const user = await signInWithEmailAndPassword(auth, e, p);
@@ -24,7 +24,7 @@ const Login = ({navigation}) => {
          navigation.navigate("Main"); 
     
         } catch (error) {
-          console.log(error); 
+         
           seterror(()=>{return {message: error.message, status: true}}); 
     
         }

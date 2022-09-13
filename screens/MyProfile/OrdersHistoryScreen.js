@@ -3,37 +3,36 @@ import { Button, TouchableOpacity, StyleSheet, Text, View, ScrollView } from "re
 import { useFirestoreQuery } from '../Custom Functions/Hooks';
 import { where, query, collection, getFirestore, orderBy } from '@firebase/firestore';
 import { auth } from '../../config/firebase-config';
-import Rating from './Rating';
-import OrderRestaurant from './OrderRestaurant';
+import HistoryItem from './HistoryItem';
 
 
 
-const OrdersScreen = ({ navigation }) => {
 
-  const [modalVisible, setModalVisible] = useState({ visible: false, order_id: "" });
+const OrdersHistoryScreen = ({ navigation }) => {
+
+    const db = getFirestore();
+    const OrdersRef = collection(db, "DeliveredOrders");
+    const q = query(OrdersRef, where("user_id", "==", auth.currentUser.uid));
+    const orders = useFirestoreQuery(q);
+    const orders_output = orders.map((order) => <HistoryItem order_data={order} />)
+    
 
 
-  const db = getFirestore();
-  const OrdersRef = collection(db, "Orders");
-  const q = query(OrdersRef, where("user_id", "==", auth.currentUser.uid));
-  let orders = useFirestoreQuery(q);
-  let orders_output = orders.map((order) => <OrderRestaurant navigation={navigation} setModalVisible={setModalVisible} key={order.id} order_data={order} />)
-  console.log(orders_output);
   return (
+    <Fragment>  
     <View style={styles.container}>
-
-
-
       <ScrollView contentContainerStyle={styles['restaurant_card']} >
-        <Rating setModalVisible={setModalVisible} modalVisible={modalVisible} />
+
         {orders_output}
 
       </ScrollView>
     </View>
+    </Fragment>
   )
+
 }
 
-export default OrdersScreen
+export default OrdersHistoryScreen
 
 const styles = StyleSheet.create({
   container: {

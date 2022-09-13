@@ -3,9 +3,9 @@ import { StyleSheet, Text, TouchableOpacity  } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPencil, faUtensils  } from '@fortawesome/free-solid-svg-icons';
 
-const EditRestaurant = () => {
+const EditRestaurant = ({navigation}) => {
   return (
-    <TouchableOpacity style={styles.card} >
+    <TouchableOpacity style={styles.card}  onPress={()=> navigation.navigate("ShowMyRestaurants",{screen: "EditRestaurantScreen"})}>
 
 
 <FontAwesomeIcon icon={faUtensils} style={styles.icon} /> 

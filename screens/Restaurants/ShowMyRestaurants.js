@@ -7,9 +7,9 @@ import { useFirestoreQuery } from '../Custom Functions/Hooks';
 import { auth } from '../../config/firebase-config';
 
 
-const ShowMyRestaurants = ({ navigation }) => {
+const ShowMyRestaurants = ({ navigation, route }) => {
 
-
+ let screen = route.params.screen; 
 
 
 
@@ -20,7 +20,7 @@ const ShowMyRestaurants = ({ navigation }) => {
 
 
 
-  let restaurants_arry = restaurants.map((restaurant) => <Restaurant forMenu={true} key={restaurant.id} navigation={navigation} restaurant_data={restaurant} />)
+  let restaurants_arry = restaurants.map((restaurant) => <Restaurant screen={screen} key={restaurant.id} navigation={navigation} restaurant_data={restaurant} />)
 
 
   return (

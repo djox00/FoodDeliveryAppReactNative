@@ -1,27 +1,27 @@
 import React from 'react'
 import { StyleSheet, Text,TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {faUtensils, faPlus, faBurger } from '@fortawesome/free-solid-svg-icons';
+import {faClockRotateLeft} from '@fortawesome/free-solid-svg-icons';
 
-const AddToMenu = ({navigation}) => {
+const OrderHistory = ({navigation}) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={()=> navigation.navigate("ShowMyRestaurants",{screen: "AddMenuScreen"})} >
+    <TouchableOpacity style={styles.card} onPress={()=> navigation.navigate("OrdersHistoryScreen")} >
 
 
-<FontAwesomeIcon icon={faBurger} style={styles.icon} /> 
-<Text style={styles.text}><FontAwesomeIcon style={{color: "orange"}} icon={faPlus} />  Add To Restaurant Menu</Text>
+
+<Text style={styles.text}><FontAwesomeIcon style={{color: "orange"}} icon={faClockRotateLeft} /> Delivered Orders</Text>
 
     </TouchableOpacity>
   )
 }
 
-export default AddToMenu
+export default OrderHistory
 
 
 
 const styles = StyleSheet.create({
     card: {
-      top: 50,
+      top: 80,
       flexDirection: 'row',
       flexWrap: 'wrap',
       alignItems: 'flex-start',

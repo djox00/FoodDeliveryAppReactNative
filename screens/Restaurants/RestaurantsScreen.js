@@ -8,10 +8,10 @@ import { useFirestoreQuery } from '../Custom Functions/Hooks';
 import { useSearchDebounce } from '../Custom Functions/Hooks';
 
 const RestaurantsScreen = ({ navigation }) => {
-
+  
 
   const [SearchText, setSearchText] = useSearchDebounce();
-
+  
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 60);
   const translateY = diffClamp.interpolate({ inputRange: [0, 60], outputRange: [0, -60] });
@@ -25,7 +25,7 @@ const RestaurantsScreen = ({ navigation }) => {
 
 
 
-  let restaurants_arry = restaurants.map((restaurant) => <Restaurant key={restaurant.id} navigation={navigation} restaurant_data={restaurant} />)
+  let restaurants_arry = restaurants.map((restaurant) => <Restaurant screen={"RestaurantSingle"} key={restaurant.id} navigation={navigation} restaurant_data={restaurant} />)
 
 
 

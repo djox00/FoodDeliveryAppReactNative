@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MyProfile from '../MyProfile';
+import MyProfileStack from '../MyProfile/MyProfileStack';
 import RestaurantsScreen from '../Restaurants/RestaurantsScreen';
-import OrdersScreen from '../Orders/OrdersScreen';
+import OrdersStack from '../Orders/OrdersStack';
 import Tools from '../Tools/Tools';
 import { collection, getDocs, getFirestore, query, where, doc, getDoc } from '@firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -17,7 +17,7 @@ const  BottomTabs = () => {
 
   const Tab = createMaterialBottomTabNavigator();
 
-const [userType, setuserType] = useState("user"); 
+const [userType, setuserType] = useState(""); 
 
 const db  = getFirestore();
 
@@ -50,9 +50,9 @@ useEffect(() => {
     barStyle={{ backgroundColor: '#694fad', }}>
         
     <Tab.Screen name="Restaurants"  options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUtensils} />}} component={RestaurantsScreen} /> 
-    <Tab.Screen name="Orders" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faCartShopping} />}} component={OrdersScreen} /> 
+    <Tab.Screen name="Orders" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faCartShopping} />}} component={OrdersStack} /> 
     { (userType == "admin" || userType == "restaurant_owner"  )? <Tab.Screen name="Tools"  options={{tabBarIcon: ()=><FontAwesomeIcon   style={{color: "white"}} icon={faGear} />}}   component={Tools}  /> : null}
-    <Tab.Screen name="My profile" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUser} />}}  component={MyProfile}  /> 
+    <Tab.Screen name="My profile" options={{tabBarIcon: ()=><FontAwesomeIcon  style={{color: "white"}}  icon={faUser} />}}  component={MyProfileStack}  /> 
     
 
     </Tab.Navigator>

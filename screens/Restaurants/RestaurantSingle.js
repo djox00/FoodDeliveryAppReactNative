@@ -1,17 +1,23 @@
 
 import React, { Fragment, useState } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, Animated } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView, Animated, TouchableOpacity } from "react-native";
 import MenuItem from './MenuItem';
 import RestaurantInfo from './RestaurantInfo';
-
+import { collection, getFirestore,addDoc, serverTimestamp, getDoc, doc } from '@firebase/firestore';
+import { async } from '@firebase/util';
+import { auth } from '../../config/firebase-config';
 
 const RestaurantSingle = ({route , navigation}) => {
+
+  const db = getFirestore(); 
+  
+
 
   
 const restaurant_data = route.params.restaurant_data; 
 
    const  { id, restaurant_adress, restaurant_menu, restaurant_name  }  =  restaurant_data; 
-
+   const [Orders_container, setOrders_container] = useState([]); 
    let menu = null; 
 
 if(!restaurant_menu == null || !restaurant_menu == "") {    
@@ -23,14 +29,38 @@ if(!restaurant_menu == null || !restaurant_menu == "") {
      
    }));
 
-    menu = objArray.map((item)=> <MenuItem restaurant_name={restaurant_name}  key={Math.random()} item={item} restaurant_id={id} />  ); 
+    menu = objArray.map((item)=> <MenuItem setOrders_container={setOrders_container} restaurant_name={restaurant_name}  key={Math.random()} item={item} restaurant_id={id} />  ); 
   }
 
+const handleOrder = async () =>{ 
+  const OrdersRef = collection(db, "Orders"); 
+
+
+  const user = await getDoc(doc(db, "Users", auth.currentUser.uid));
+      const user_data = user.data();
+
+try {
+  
+  const response = await addDoc(OrdersRef, {   
+    user_id: auth.currentUser.uid,
+    first_name: user_data.first_name,
+    last_name: user_data.last_name,
+    adress: user_data.adress,
+    phone: user_data.phone,
+    restaurant_id: id,
+    restaurant_name: restaurant_name,
+    ordered: serverTimestamp() ,
+    ordered_food: Orders_container 
+  }); 
+setOrders_container([]);
+} catch (error) {
+
+  
+}
 
 
 
-
-
+}
   return (
 
     <Fragment>
@@ -46,8 +76,15 @@ if(!restaurant_menu == null || !restaurant_menu == "") {
 
           </ScrollView>
         
+{ Orders_container.length>0 ?  <View style={styles.cart}> 
+ <Text style={{width: "100%", textAlign: "center"}}>{Orders_container.length} {Orders_container.length>1 ? "items" : "item"} in cart. Do you want to  procced?</Text> 
+  
+<TouchableOpacity style={styles.order} onPress={handleOrder} ><Text>Order</Text></TouchableOpacity> 
+ <TouchableOpacity style={styles.cancel}  ><Text>Cancel</Text></TouchableOpacity> 
+ 
+ </View>: null}
+    </View> 
 
-    </View>
     </Fragment>
   )
 }
@@ -74,7 +111,31 @@ const styles = StyleSheet.create({
      top: 0,
      height: 100,
       color: "white",
-    
+    }, 
+    cart: {
+      position: "absolute", 
+      bottom: 10, 
+      width: "95%", 
+      height: 50, 
+      backgroundColor: "white", 
+      borderRadius: 10,
+      display: "flex",
+      alignItems: "center",
+      justifyContent:  "center",
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'flex-start',
+      justifyContent: "center",
+    }, 
+    order:{
+      marginHorizontal: 10,
+      backgroundColor: "green",
+      color: "white"
+    }, 
+    cancel: { 
+      marginHorizontal: 10,
+      backgroundColor: "red", 
+      color: "white"
 
     }
   

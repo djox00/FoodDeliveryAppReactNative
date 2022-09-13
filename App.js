@@ -11,7 +11,7 @@ import { StatusBar } from "react-native";
 import RestaurantSingle from "./screens/Restaurants/RestaurantSingle";
 import { auth } from "./config/firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
-
+import OrderGroup from "./screens/Orders/OrderGroup";
 export default function App() {
 
 const [User, setUser] = useState(null); 
@@ -43,6 +43,7 @@ setUser(currentUser)
             <>
               <Stack.Screen name="Main" component={Main} options={{ headerLeft: () => null, headerShown: false }} />
               <Stack.Screen name="RestaurantSingle" component={RestaurantSingle} />
+            
             </>
             :
             <>

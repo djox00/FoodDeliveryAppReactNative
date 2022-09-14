@@ -21,15 +21,18 @@ const OrdersHistoryScreen = ({ navigation }) => {
   return (
     <Fragment>  
     <View style={styles.container}>
+      
       <ScrollView contentContainerStyle={styles['restaurant_card']} >
-
+      <View>  
+      {orders != "" ?  <Text style={{fontWeight: "700", color: "#694fad", textAlign: "center", marginBottom: 30,borderRadius: 20, backgroundColor: "white", width: 120, padding: 10, marginLeft: "auto", marginRight: "auto"}}>Orders History</Text> : null}
+          </View>
         {orders_output}
 
       </ScrollView>
     </View>
     </Fragment>
   )
-
+     
 }
 
 export default OrdersHistoryScreen

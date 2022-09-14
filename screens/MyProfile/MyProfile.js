@@ -5,6 +5,8 @@ import { auth } from '../../config/firebase-config';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import OrderHistory from './OrdersHistory';
+import EditProfile from './EditProfile';
+
 const MyProfile = ({navigation}) => {
 
 const logOut = async () =>{ 
@@ -18,7 +20,7 @@ const logOut = async () =>{
 <FontAwesomeIcon style={styles.logout} icon={faRightFromBracket} />
 </TouchableOpacity>
 <OrderHistory navigation={navigation} />
-
+<EditProfile navigation={navigation} />
 
 
     </View>

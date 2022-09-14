@@ -54,15 +54,16 @@ for(i  ; i<rating ; i++){
         <Fragment>
 
 <View style={styles.card}>
+
         <View style={{ width: "30%" }}>
           <Image source={{ uri: imgURL!='' ? imgURL : "http://www.fnfmetal.com/uploads/products/1311-product_Mp8wDrKX.jpg" }} style={{ width: 70, height: 70, left: 5, top: 5, borderRadius: 10 }} />
         </View>
 
         <View style={{ width: "70%" }}>
 
-          <Text style={{fontWeight: "700"}}>{restaurant_name}</Text> 
+          <Text style={{fontWeight: "700", color: "white"}}>{restaurant_name}</Text> 
 
-          <Text>{date}</Text>
+          <Text style={{color: "white"}}>{date}</Text>
 
           <View style={styles.rating}> 
             {stars}

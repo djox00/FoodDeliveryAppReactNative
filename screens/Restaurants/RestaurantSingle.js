@@ -79,8 +79,8 @@ setOrders_container([]);
 { Orders_container.length>0 ?  <View style={styles.cart}> 
  <Text style={{width: "100%", textAlign: "center"}}>{Orders_container.length} {Orders_container.length>1 ? "items" : "item"} in cart. Do you want to  procced?</Text> 
   
-<TouchableOpacity style={styles.order} onPress={handleOrder} ><Text>Order</Text></TouchableOpacity> 
- <TouchableOpacity style={styles.cancel}  ><Text>Cancel</Text></TouchableOpacity> 
+<TouchableOpacity style={styles.order} onPress={handleOrder} ><Text style={{color: "white", padding: 2}}>Order</Text></TouchableOpacity> 
+ <TouchableOpacity style={styles.cancel} onPress={()=>setOrders_container([])}   ><Text style={{color: "white", padding: 2}}>Cancel</Text></TouchableOpacity> 
  
  </View>: null}
     </View> 
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
       position: "absolute", 
       bottom: 10, 
       width: "95%", 
-      height: 50, 
+      height: 55, 
       backgroundColor: "white", 
       borderRadius: 10,
       display: "flex",
@@ -126,16 +126,23 @@ const styles = StyleSheet.create({
       flexWrap: 'wrap',
       alignItems: 'flex-start',
       justifyContent: "center",
+      
     }, 
     order:{
       marginHorizontal: 10,
+      paddingHorizontal: 10,
+      paddingVertical: 2,
       backgroundColor: "green",
-      color: "white"
+      color: "white",
+      borderRadius: 10
     }, 
     cancel: { 
       marginHorizontal: 10,
+      paddingHorizontal: 8,
+      paddingVertical: 2,
       backgroundColor: "red", 
-      color: "white"
+      color: "white",
+      borderRadius: 10
 
     }
   

@@ -35,19 +35,10 @@ for(i  ; i<rating ; i++){
 
 
     }
+    getImageFromStorage();
+  
 
-    useEffect(() => {
-        getImageFromStorage();
-    }, [])
-
-
-
-
-    const handleDeleteMenuItem = () =>{ 
-        deleteById(food_id); 
-    }
-
-    let stars = rating_array.map((el) =>  <FontAwesomeIcon style={{ marginHorizontal: 5, marginTop: 5, color: "rgb(252, 198, 3)"}} icon={faStar} /> )
+    let stars = rating_array.map((el) =>  <FontAwesomeIcon key={Math.random()} style={{ marginHorizontal: 5, marginTop: 5, color: "rgb(252, 198, 3)"}} icon={faStar} /> )
 
 
     return (

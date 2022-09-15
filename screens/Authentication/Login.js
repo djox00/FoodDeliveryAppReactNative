@@ -10,22 +10,20 @@ const Login = ({navigation}) => {
  const [email, setemail] = useState(''); 
  const [password, setpassword] = useState(''); 
    
-
-    const [error, seterror] = useState({message: '', status: false}); 
+     const [ErrorVisible, setErrorVisible] = useState(false); 
+     const [errorMessage, seterrorMessage] = useState(''); 
 
     const handleLogin = async (e, p) => {
         
         try {
          
           const user = await signInWithEmailAndPassword(auth, e, p);
-          
-         seterror(()=>{return {message: '', status: false}}); 
-         // setAdmin(); 
          navigation.navigate("Main"); 
     
         } catch (error) {
          
-          seterror(()=>{return {message: error.message, status: true}}); 
+            seterrorMessage(error.message); 
+            setErrorVisible(true); 
     
         }
       }
@@ -35,9 +33,9 @@ const Login = ({navigation}) => {
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>   
         <View style={styles.container}>
-        { error.status ? <Error message={error.message} /> : null}
+        
             <View style={styles['login-form']}>
-                
+            
                 <TextInput placeholder="enter you email" style={[styles['input-field'],{marginBottom: 20} ]} onChangeText={(val)=> setemail(val)} />
                 <TextInput placeholder="enter you password" onChangeText={(val)=> setpassword(val)} secureTextEntry={true} style={[styles['input-field'],{marginBottom: 50} ]}  />
                 <View style={styles['align-center']}> 
@@ -50,14 +48,14 @@ const Login = ({navigation}) => {
                 <TouchableOpacity style={[styles.button,{width: 160}]} title="Register" onPress={()=> navigation.navigate("Register")}><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Create an account</Text></TouchableOpacity>
                 
                 </View>
-                
+                <Error ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} /> 
                  </View>
 
            
 
 
         </View>
-        </ScrollView>
+        </ScrollView>    
     )
 }
 const styles = StyleSheet.create({
@@ -73,8 +71,8 @@ const styles = StyleSheet.create({
         width: "70%"
     },
     "input-field": {
-        backgroundColor: "#fff",
-        color: "rgb(38, 50, 56)",
+        backgroundColor: "rgb(248, 248, 248)",
+        color: "rgb(38, 50, 46)",
         padding: 10,
         marginVertical: 7,
         borderColor: "rgba(0, 0, 0, 0.02)",

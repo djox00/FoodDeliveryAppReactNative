@@ -106,11 +106,11 @@ const MenuItem = ({ item, restaurant_id, restaurant_name, setOrders_container })
 
 
 
-        <View style={{ textAlign: "center", marginRight: 2, marginTop: 30 }}>
+        <View style={{ textAlign: "center", marginRight: 2,  marginTop: 27 }}>
           <RNPickerSelect
             onValueChange={(value, label) => {
 
-              console.log(label);
+             
 
               switch (label) {
                 case 0:
@@ -144,13 +144,13 @@ const MenuItem = ({ item, restaurant_id, restaurant_name, setOrders_container })
         </View>
 
 
-        <View style={{ textAlign: "center", marginTop: 37 }}>
-          <Text style={{ width: 50, marginBottom: "auto", marginTop: "auto", color: "white" }}> {SelectedFood.price + currency}  </Text>
+        <View style={{ textAlign: "center", marginTop: 40 }}>
+          <Text style={{ width: 50, marginBottom: "auto", marginTop: "auto", color: "white", marginLeft: 10 }}> {SelectedFood.price + currency}  </Text>
         </View>
 
 
-        <View style={{ textAlign: "center", marginTop: 27 }}>
-          <TouchableOpacity onPress={handleAddToOrders} style={{ marginBottom: "auto", marginTop: "auto", backgroundColor: "white", borderRadius: 5, padding: 10 }} ><Text>Add</Text></TouchableOpacity>
+        <View style={{ textAlign: "center", marginTop: 29  }}>
+          <TouchableOpacity onPress={handleAddToOrders} style={{ marginBottom: "auto", marginTop: "auto", backgroundColor: "rgb(255, 211, 99)", borderRadius: 25, padding: 12}} ><Text style={{color: "#694fad", fontWeight: "700"}}>Add</Text></TouchableOpacity>
         </View>
 
         {food_data.food.food_description != null && food_data.food.food_description != "" ? <Text style={{ color: "white" }}>       Opis jela: {food_data.food.food_description}</Text> : null}
@@ -190,13 +190,15 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 6,
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 4,
+    borderRadius: 20,
     color: 'black',
     paddingRight: 30,
     alignItems: "center",
     marginTop: "auto",
     marginBottom: "auto",
-    backgroundColor: "white"
+    backgroundColor: "white", 
+    width: 150, 
+    textAlign: "center"
   },
   inputAndroid: {
     fontSize: 13,
@@ -204,13 +206,14 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 8,
     borderWidth: 0.5,
     borderColor: '#694fad',
-    borderRadius: 8,
+    borderRadius: 20,
     color: 'black',
     paddingRight: 30,
     marginTop: "auto",
     marginBottom: "auto",
     backgroundColor: "white",
-    width: 150
+    width: 150, 
+    textAlign: "center"
   },
   inputWeb: {
     fontSize: 13,
@@ -218,13 +221,14 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 8,
     borderWidth: 0.5,
     borderColor: '#694fad',
-    borderRadius: 8,
+    borderRadius: 20,
     color: 'black',
     paddingRight: 30,
     marginTop: "auto",
     marginBottom: "auto",
     backgroundColor: "white",
-    width: 150
+    width: 150, 
+    textAlign: "center"
   }
 
 

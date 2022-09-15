@@ -14,7 +14,7 @@ const OrdersHistoryScreen = ({ navigation }) => {
     const OrdersRef = collection(db, "DeliveredOrders");
     const q = query(OrdersRef, where("user_id", "==", auth.currentUser.uid));
     const orders = useFirestoreQuery(q);
-    const orders_output = orders.map((order) => <HistoryItem order_data={order} />)
+    const orders_output = orders.map((order) => <HistoryItem key={order.id} order_data={order} />)
     
 
 
@@ -24,7 +24,7 @@ const OrdersHistoryScreen = ({ navigation }) => {
       
       <ScrollView contentContainerStyle={styles['restaurant_card']} >
       <View>  
-      {orders != "" ?  <Text style={{fontWeight: "700", color: "#694fad", textAlign: "center", marginBottom: 30,borderRadius: 20, backgroundColor: "white", width: 120, padding: 10, marginLeft: "auto", marginRight: "auto"}}>Orders History</Text> : null}
+      {orders != "" ?  <Text style={{fontWeight: "700", color: "#694fad", textAlign: "center",marginTop:20, marginBottom: 30,borderRadius: 20, backgroundColor: "white", width: 120, padding: 10, marginLeft: "auto", marginRight: "auto"}}>Orders History</Text> : null}
           </View>
         {orders_output}
 

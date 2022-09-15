@@ -11,9 +11,7 @@ import ImageUploader from './ImageUploader';
 const AddMenuScreen = ({ navigation, route }) => {
 
     const db = getFirestore();   
-
     let restaurant_id = route.params.restaurant_data.id; 
-   let restaurant_data = route.params.restaurant_data; 
     const [loading, setloading] = useState(false); 
     const [menu_data, setmenu_data] = useState({
         food_name: "",
@@ -38,17 +36,26 @@ const uploadImage = async (uri, imageName, DirectoryName) => {
     
 }
 
+
+let foodRandom = () => {
+    const dateString = Date.now().toString(36);
+    const randomness = Math.random().toString(36).substr(2);
+    return dateString + randomness;
+}
+
 const handleSubmit = async () => {
    
     setloading(true); 
     try {
-    const RestaurantRef = doc(db,"Restaurants",restaurant_id); 
+    const RestaurantRef = doc(db,"Restaurants",restaurant_id);
+    const rest = await getDoc(RestaurantRef); 
+    const restaurant_data = rest.data(); 
      let menu = {}; 
      let food_id = 0; 
      if(restaurant_data.restaurant_menu!= null && restaurant_data.restaurant_menu!= ""){
       menu = restaurant_data.restaurant_menu; 
      const food_menu_array = Object.entries(menu).map((e) => ( { [e[0]]: e[1] } ));
-     food_id = food_menu_array.length + 1; 
+     food_id = foodRandom(); 
      }
      
 const menu_reshape = Object.assign(menu, {   [food_id] : {food_name: menu_data.food_name, 

@@ -4,13 +4,18 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { doc, updateDoc, collection, query, where, getFirestore, getDoc } from '@firebase/firestore';
 import { auth } from '../../config/firebase-config';
 import Success from '../../UI Components/Success';
-
+import Error from '../../UI Components/Error';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const EditProfileScreen = ({ navigation, route}) => {
 
 const user_data = route.params.user; 
 
 const [SuccessVisible, setSuccessVisible] = useState(false); 
+const [ErrorVisible, setErrorVisible] = useState(false); 
+const [errorMessage, seterrorMessage] = useState(''); 
+
+
 
 const [user, setuser] = useState({ 
     first_name: user_data.first_name, 
@@ -21,34 +26,49 @@ const [user, setuser] = useState({
 
 
 const updateUser = async () => {
-    const db = getFirestore(); 
-    const userRef = doc(db,"Users",auth.currentUser.uid); 
-    const resp = await updateDoc(userRef, {
-        first_name: user.first_name, 
-        last_name: user.last_name, 
-        phone: user.phone, 
-        adress: user.adress
-    })
-    setSuccessVisible(true); 
-    
 
+    try {
+        
+        
+        const db = getFirestore(); 
+        const userRef = doc(db,"Users",auth.currentUser.uid); 
+        if (!user.first_name.trim() || !user.last_name.trim() || !user.adress.trim() || !user.phone.trim() ) {
+            seterrorMessage("a input field is empty! you need to fill all of them!"); 
+            throw Error("a input field is empty! you need to fill all of them!");
+            
+        }
+        
+        const resp = await updateDoc(userRef, {
+            first_name: user.first_name, 
+            last_name: user.last_name, 
+            phone: user.phone, 
+            adress: user.adress
+        })
+        setSuccessVisible(true); 
+        
+    } catch (error) {
+        setErrorVisible(true); 
+    }
+        
 
 }
 
 
 
     return (
+        
         <View style={styles.container}>
 
             <ScrollView contentContainerStyle={styles.form}>
 <Success setSuccessVisible={setSuccessVisible} SuccessVisible={SuccessVisible} message="Profile info updated successfully!" />
+                
                 <View style={styles['input-card']}>
                     <TextInput value={user.first_name} style={styles['input-field']} onChangeText={(value) => setuser((curr) => { return { ...curr, first_name: value } })} />
                     <TextInput value={user.last_name} style={styles['input-field']} onChangeText={(value) => setuser((curr) => { return { ...curr, last_name: value } })} />
                     <TextInput value={user.phone} keyboardType="number-pad" style={styles['input-field']} onChangeText={(value) => setuser((curr) => { return { ...curr, phone: value } })} />
                     <TextInput value={user.adress} style={styles['input-field']} onChangeText={(value) => setuser((curr) => { return { ...curr, adress: value } })} />
                     <TouchableOpacity onPress={updateUser} style={styles.button} ><Text style={{ color: "white", textAlign: "center", fontWeight: "600", fontSize: 13 }}>Change</Text></TouchableOpacity>
-
+                    <Error ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
                 </View>
 
 
@@ -100,7 +120,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     button: {
-        marginTop: 50,
+        marginTop: 30,
         width: 90,
         textAlign: "center",
         borderRadius: 20,

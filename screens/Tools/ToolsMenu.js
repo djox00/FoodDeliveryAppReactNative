@@ -34,10 +34,8 @@ useEffect(() => {
 }, [])
 
 
-
-
   const Stack = createNativeStackNavigator();
-console.log(userType);
+
   return (
     <Fragment>
       <View style={styles.container}>

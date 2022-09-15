@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import React, { Fragment, useState, useRef } from 'react'
+import React, { Fragment, useState } from 'react'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {  Button, TouchableOpacity, StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
 import { auth } from '../../config/firebase-config';
 import Error from '../../UI Components/Error';
@@ -23,7 +24,8 @@ const [user_data, setuser_data] = useState({
 
     
 
-    const [error, seterror] = useState({message: '', status: false}); 
+const [ErrorVisible, setErrorVisible] = useState(false); 
+const [errorMessage, seterrorMessage] = useState(''); 
 
     const handleRegister = async () => {
     
@@ -31,14 +33,15 @@ try{
 
 const {first_name, last_name, email, password, conf_password, adress, phone} = user_data; 
 
-    seterror(()=>{return {message: '', status: false}});
+    
      
     if (!first_name.trim() || !last_name.trim() || !email.trim() || !password.trim() || !conf_password.trim() || !adress.trim() || !phone.trim() ) {
-        throw Error("a input field is empty! you need to fill all of them!!");
+        seterrorMessage("a input field is empty! you need to fill all of them!"); 
+        throw Error("a input field is empty! you need to fill all of them!");
         
       }
       
-    if(password!==conf_password) throw Error("Password is not a match!"); // not solved 
+    if(password!==conf_password)  {seterrorMessage("Password is not a match!"); throw Error("Password is not a match!"); }// not solved 
     
     const user = await createUserWithEmailAndPassword(auth,email,password); 
    
@@ -53,11 +56,9 @@ const {first_name, last_name, email, password, conf_password, adress, phone} = u
     
         navigation.navigate("Main"); 
 
-}catch(err) {
-
-   
-
-    seterror(()=>{return {message: error.message, status: true}});  
+}catch(error) {
+    if(errorMessage=="") seterrorMessage(error.message); 
+    setErrorVisible(true);   
 
 }
 
@@ -72,10 +73,10 @@ const {first_name, last_name, email, password, conf_password, adress, phone} = u
 
    <View style={styles.container} > 
 
-           {error.status ? <Error message={error.message} />: null}
-                <View style={styles['login-form']}>
+   <KeyboardAwareScrollView> 
+                <View style={styles['register-form']}>
 
-
+                
                     <View style={styles['first-second']} >
                         <TextInput placeholder="enter you First name"  textContentType="username" onChangeText={(val)=> setuser_data((curr)=> { return { ...curr,first_name: val}} )} style={[styles['input-field'], styles['first-second']]} />
                         <TextInput placeholder="enter you Last name" textContentType="username" onChangeText={(val)=> setuser_data((curr)=> { return { ...curr,last_name: val}} )}  style={[styles['input-field'], styles['first-second']]} />
@@ -95,9 +96,10 @@ const {first_name, last_name, email, password, conf_password, adress, phone} = u
                    <TouchableOpacity style={styles.button}  onPress={handleRegister}  ><Text style={{color: "white", fontWeight: "600", textAlign: "center"}}>Register</Text></TouchableOpacity>
 
 </View>
-                     
+
+                     <Error ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
                 
-                </View>
+                </View></KeyboardAwareScrollView> 
 
 
 
@@ -117,14 +119,14 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         top: 0
     },
-    "login-form": {
+    "register-form": {
         top: "auto",
         marginHorizontal: 10,
         marginTop: 20
     },
     "input-field": {
-        backgroundColor: "#fff",
-        color: "rgb(38, 50, 56)",
+        backgroundColor: "rgb(248, 248, 248)",
+        color: "rgb(38, 50, 46)",
         padding: 10,
         marginVertical: 10,
         marginHorizontal: "2.5%",

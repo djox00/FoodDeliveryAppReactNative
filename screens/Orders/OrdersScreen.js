@@ -18,7 +18,7 @@ const OrdersScreen = ({ navigation }) => {
   const q = query(OrdersRef, where("user_id", "==", auth.currentUser.uid));
   let orders = useFirestoreQuery(q);
   let orders_output = orders.map((order) => <OrderRestaurant navigation={navigation} setModalVisible={setModalVisible} key={order.id} order_data={order} />)
-  console.log(orders_output);
+ 
   return (
     <View style={styles.container}>
 

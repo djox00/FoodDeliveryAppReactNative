@@ -54,9 +54,9 @@ useEffect(() => {
   if(date != null ){  
     setinput_date( date.toDate()); 
 }
-getImageFromStorage();
 }, [order_data])
 
+getImageFromStorage();
 
 function millisToMinutes(millis) {
   var minutes = Math.floor(millis / 60000);

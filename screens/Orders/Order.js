@@ -17,15 +17,12 @@ try {
   setimgURL(url);
 
 } catch (error) {
-  console.log(error)
+  
 }
 }
-
-
-useEffect(() => {
 
 getImageFromStorage();
-}, [])
+
 
 
 

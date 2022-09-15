@@ -29,11 +29,11 @@ const ImageUploader = ({setImageuri}) => {
 
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ display: "flex",  alignItems: 'center', justifyContent: 'center' }}>
 
       {!picked ?
 
-        <View style={{ textAlign: "center" }}>
+        <View style={{ textAlign: "center", marginTop: 30 }}>
           <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center' }} ><FontAwesomeIcon style={[styles.icon, { transform: [{ scale: 3 }] }]} icon={faImage} /></TouchableOpacity>
           <Text style={{ textAlign: 'center', marginTop: 25 }}>Select Image </Text>
         </View>
@@ -41,8 +41,8 @@ const ImageUploader = ({setImageuri}) => {
         :
 
         <View style={{ textAlign: "center" }}>
-          <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center' }} ><FontAwesomeIcon style={[styles.icon, { transform: [{ scale: 2 }] }]} icon={faImage} /></TouchableOpacity>
-          <Text style={{ textAlign: 'center', marginTop: 10 }}>Change Image</Text>
+          <TouchableOpacity onPress={pickImage} style={{ textAlign: 'center', marginTop: 20  }} ><FontAwesomeIcon style={[styles.icon, { transform: [{ scale: 2 }] }]} icon={faImage} /></TouchableOpacity>
+          <Text style={{ textAlign: 'center', marginTop: 5 }}>Change Image</Text>
         </View>
 
       }

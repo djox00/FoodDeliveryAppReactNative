@@ -13,7 +13,7 @@ const OrderGroup = ({ route }) => {
   
 
 
-   let order_output_data = order.ordered_food.map((food) => <Order restaurant_id={order.restaurant_id} food_data={food} />)
+   let order_output_data = order.ordered_food.map((food) => <Order key={Math.random()} restaurant_id={order.restaurant_id} food_data={food} />)
 
 
 

@@ -4,7 +4,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { doc, updateDoc, collection, query, where, getFirestore, getDoc } from '@firebase/firestore';
 import { auth } from '../../config/firebase-config';
 import Success from '../../UI Components/Success';
-import Error from '../../UI Components/Error';
+import ErrorComponent from '../../UI Components/Error';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const EditProfileScreen = ({ navigation, route}) => {
@@ -33,7 +33,6 @@ const updateUser = async () => {
         const db = getFirestore(); 
         const userRef = doc(db,"Users",auth.currentUser.uid); 
         if (!user.first_name.trim() || !user.last_name.trim() || !user.adress.trim() || !user.phone.trim() ) {
-            seterrorMessage("a input field is empty! you need to fill all of them!"); 
             throw Error("a input field is empty! you need to fill all of them!");
             
         }
@@ -47,6 +46,7 @@ const updateUser = async () => {
         setSuccessVisible(true); 
         
     } catch (error) {
+        seterrorMessage(error.message); 
         setErrorVisible(true); 
     }
         
@@ -68,7 +68,7 @@ const updateUser = async () => {
                     <TextInput value={user.phone} keyboardType="number-pad" style={styles['input-field']} onChangeText={(value) => setuser((curr) => { return { ...curr, phone: value } })} />
                     <TextInput value={user.adress} style={styles['input-field']} onChangeText={(value) => setuser((curr) => { return { ...curr, adress: value } })} />
                     <TouchableOpacity onPress={updateUser} style={styles.button} ><Text style={{ color: "white", textAlign: "center", fontWeight: "600", fontSize: 13 }}>Change</Text></TouchableOpacity>
-                    <Error ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
+                    <ErrorComponent ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
                 </View>
 
 

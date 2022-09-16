@@ -10,6 +10,8 @@ import ImageUploader from './ImageUploader';
 const AddRestaurantScreen = ({navigation}) => {
 
   
+
+
    
     const db = getFirestore();    
     const [error, seterror] = useState({ message: '', status: false });
@@ -22,6 +24,29 @@ const AddRestaurantScreen = ({navigation}) => {
         restaurant_description: "",
         restaurant_owner: ""
     })
+
+
+    const [userType, setuserType] = useState(""); 
+    
+    const checkUserType =  async ()  =>{
+    
+      try {
+        const user = await getDoc(doc(db,"Users",auth.currentUser.uid)); 
+        const usertype = await user.data(); 
+        setuserType(usertype.user); 
+        
+      } catch (error) {
+        
+      }
+    
+    }
+    
+    useEffect(() => {
+      checkUserType(); 
+    }, [])
+
+
+
 
     
     const [Imageuri, setImageuri] = useState(null);
@@ -62,8 +87,8 @@ const AddRestaurantScreen = ({navigation}) => {
                 restaurant_description: restaurant_data.restaurant_description,    
                 restaurant_owner: uid
             });
-         
-            const user_to_restaurant_owner = await updateDoc(doc(db, "Users", uid), { user: "restaurant_owner" });
+            if(userType != "admin") {
+            const user_to_restaurant_owner = await updateDoc(doc(db, "Users", uid), { user: "restaurant_owner" });}
 
             const image_upload_response = await uploadImage(Imageuri, restaurant_data.restaurant_name, restaurant_response.id);
             setloading(false); 
@@ -73,7 +98,7 @@ const AddRestaurantScreen = ({navigation}) => {
  
 }
         } catch (error) {
-
+     seterror({message: error.message, status: true}); 
 
         }
 

@@ -2,7 +2,7 @@ import React, { createRef, useEffect,  useState } from 'react'
 import { Alert, Button, Platform, StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from "react-native";
 import { auth } from '../../config/firebase-config';
 import { signInWithEmailAndPassword} from 'firebase/auth';
-import Error from '../../UI Components/Error';
+import ErrorComponent from '../../UI Components/Error';
 
 
 const Login = ({navigation}) => {
@@ -48,7 +48,7 @@ const Login = ({navigation}) => {
                 <TouchableOpacity style={[styles.button,{width: 160}]} title="Register" onPress={()=> navigation.navigate("Register")}><Text style={{textAlign: "center", color: "white", fontWeight: "400"}}>Create an account</Text></TouchableOpacity>
                 
                 </View>
-                <Error ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} /> 
+                <ErrorComponent ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} /> 
                  </View>
 
            

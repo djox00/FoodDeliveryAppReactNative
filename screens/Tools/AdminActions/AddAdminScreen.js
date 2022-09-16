@@ -33,7 +33,7 @@ const AddAdminScreen = () => {
             });
 
         } catch (error) {
-
+            seterror({ message: error.message, status: true });
 
         }
 

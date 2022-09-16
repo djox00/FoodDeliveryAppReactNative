@@ -22,7 +22,7 @@ const OrdersStack = () => {
 
       }}>
         <Stack.Screen name="MyProfile"  component={MyProfile} options={{ headerLeft: () => null, headerShown: false }} />
-        <Stack.Screen name="OrdersHistoryScreen"  component={OrdersHistoryScreen} options={{ headerLeft: () => null, headerShown: false }} />
+        <Stack.Screen name="OrdersHistoryScreen"  component={OrdersHistoryScreen}  />
         <Stack.Screen name="EditProfileScreen" options={{title: "Edit Profile"}} component={EditProfileScreen} />
 
       </Stack.Navigator>

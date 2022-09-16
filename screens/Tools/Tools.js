@@ -31,9 +31,9 @@ const Tools = ({ navigation }) => {
       }}>
         <Stack.Screen name="ToolsMenu"  component={ToolsMenu} options={{ headerLeft: () => null, headerShown: false }} />
         <Stack.Screen name="AddAdminScreen" component={AddAdminScreen} options={{ headerLeft: () => null, headerShown: false }} />
-        <Stack.Screen name="AddRestaurantScreen" component={AddRestaurantScreen} options={{ headerLeft: () => null, headerShown: false }} />
-        <Stack.Screen name="AddMenuScreen" component={AddMenuScreen} options={{ headerLeft: () => null, headerShown: false }} />
-        <Stack.Screen name="EditRestaurantScreen" component={EditRestaurantScreen} options={{ headerLeft: () => null, headerShown: false }} />
+        <Stack.Screen name="AddRestaurantScreen" component={AddRestaurantScreen}  />
+        <Stack.Screen name="AddMenuScreen" component={AddMenuScreen}  />
+        <Stack.Screen name="EditRestaurantScreen" component={EditRestaurantScreen} />
         <Stack.Screen name="ShowMyRestaurants" component={ShowMyRestaurants} options={{ headerLeft: () => null, headerShown: false }} />
       </Stack.Navigator>
 

@@ -20,7 +20,8 @@ const OrdersHistoryScreen = ({ navigation }) => {
 
   return (
     <Fragment>  
-    <View style={styles.container}>
+      <View style={styles.wrap} > 
+    <ScrollView contentContainerStyle={styles.container}>
       
       <ScrollView contentContainerStyle={styles['restaurant_card']} >
       <View>  
@@ -29,6 +30,7 @@ const OrdersHistoryScreen = ({ navigation }) => {
         {orders_output}
 
       </ScrollView>
+    </ScrollView>
     </View>
     </Fragment>
   )
@@ -39,12 +41,16 @@ export default OrdersHistoryScreen
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+   
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "rgb(255, 211, 99)",
+
+  }, 
+  wrap: { 
+    flex: 1,    
+   backgroundColor: "rgb(255, 211, 99)",
     height: "100%",
     width: "100%"
-  }, 
+  }
 }); 

@@ -3,7 +3,7 @@ import React, { Fragment, useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {  Button, TouchableOpacity, StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
 import { auth } from '../../config/firebase-config';
-import Error from '../../UI Components/Error';
+import ErrorComponent from '../../UI Components/Error';
 import { getFirestore, setDoc, collection, doc } from '@firebase/firestore';
 
 
@@ -41,7 +41,7 @@ const {first_name, last_name, email, password, conf_password, adress, phone} = u
         
       }
       
-    if(password!==conf_password)  {seterrorMessage("Password is not a match!"); throw Error("Password is not a match!"); }// not solved 
+    if(password!==conf_password)  { throw Error("Password is not a match!"); }
     
     const user = await createUserWithEmailAndPassword(auth,email,password); 
    
@@ -57,7 +57,7 @@ const {first_name, last_name, email, password, conf_password, adress, phone} = u
         navigation.navigate("Main"); 
 
 }catch(error) {
-    if(errorMessage=="") seterrorMessage(error.message); 
+    seterrorMessage(error.message); 
     setErrorVisible(true);   
 
 }
@@ -97,7 +97,7 @@ const {first_name, last_name, email, password, conf_password, adress, phone} = u
 
 </View>
 
-                     <Error ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
+                     <ErrorComponent ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
                 
                 </View></KeyboardAwareScrollView> 
 

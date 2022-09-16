@@ -31,16 +31,8 @@ const MenuItemDelete = ({ item, restaurant_id, deleteById  }) => {
         } catch (error) {
 
         }
-
-
-
     }
-
-    useEffect(() => {
         getImageFromStorage();
-    }, [])
-
-
 
 
     const handleDeleteMenuItem = () =>{ 

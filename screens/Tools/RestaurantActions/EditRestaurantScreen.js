@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity 
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { doc, updateDoc, collection, query, where, getFirestore } from '@firebase/firestore';
 import MenuItemDelete from './MenuItemDelete';
+import ErrorComponent from '../../../UI Components/Error'; 
+import Success from '../../../UI Components/Success'; 
 
 
 const EditRestaurantScreen = ({ navigation, route }) => {
@@ -11,6 +13,12 @@ const EditRestaurantScreen = ({ navigation, route }) => {
 
     const [imgURL, setimgURL] = useState('');
     const [update, setupdate] = useState(false); 
+
+
+    const [SuccessVisible, setSuccessVisible] = useState(false); 
+    const [ErrorVisible, setErrorVisible] = useState(false); 
+    const [errorMessage, seterrorMessage] = useState(''); 
+
     const getImageFromStorage = async () => {
 
         try {
@@ -46,12 +54,25 @@ const EditRestaurantScreen = ({ navigation, route }) => {
 
 
     const UpdateRestaurantInfo = async () => {
+      
+       
+try {
+    if (!restaurant_info.restaurant_name.trim() || !restaurant_info.restaurant_adress.trim() || !restaurant_info.restaurant_description.trim() ) { 
+        
+        throw Error("a input field is empty! you need to fill all of them!");
+    } 
+    const resp = await updateDoc(restaurantRef, {
+        restaurant_name: restaurant_info.restaurant_name, 
+        restaurant_adress: restaurant_info.restaurant_adress, 
+        restaurant_description: restaurant_info.restaurant_description
+    })
+    setSuccessVisible(true);
+    
+} catch (error) {
+    seterrorMessage(error.message); 
+    setErrorVisible(true); 
 
-        const resp = await updateDoc(restaurantRef, {
-            restaurant_name: restaurant_info.restaurant_name, 
-            restaurant_adress: restaurant_info.restaurant_adress, 
-            restaurant_description: restaurant_info.restaurant_description
-        })
+        } 
 
 
 
@@ -80,16 +101,11 @@ const restaurant_menu = restaurant_data.restaurant_menu;
          menu = objArray.map((item)=> <MenuItemDelete deleteById={deleteById}    key={Math.random()} item={item} restaurant_id={restaurant_data.id} />  ); 
 
        }
-     
-       
-
-
-
-
-
+   
 
     return (
         <ScrollView style={styles.container}>
+
 
             <ScrollView contentContainerStyle={styles.form}>
 
@@ -107,8 +123,8 @@ const restaurant_menu = restaurant_data.restaurant_menu;
     {menu && menu}
 
 
-
-
+    <Success setSuccessVisible={setSuccessVisible} SuccessVisible={SuccessVisible} message="Restaurant info updated successfully!" />
+    <ErrorComponent ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
 
 
             </ScrollView>

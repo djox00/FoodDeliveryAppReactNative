@@ -9,102 +9,122 @@ import Success from '../../../UI Components/Success';
 
 const AddMenuScreen = ({ navigation, route }) => {
 
-    const db = getFirestore();   
-    let restaurant_id = route.params.restaurant_data.id; 
-    const [loading, setloading] = useState(false); 
+    const db = getFirestore();
+    let restaurant_id = route.params.restaurant_data.id;
+    const [loading, setloading] = useState(false);
     const [menu_data, setmenu_data] = useState({
         food_name: "",
         food_description: "",
     })
 
-const [food_price, setfood_price] = useState({ 
-Mala: "", 
-Srednja: "", 
-Velika: ""
-})
+    const [food_price, setfood_price] = useState({
+        Mala: "",
+        Srednja: "",
+        Velika: ""
+    })
 
 
-const [Imageuri, setImageuri] = useState(null);
+    const [Imageuri, setImageuri] = useState(null);
 
 
-const [SuccessVisible, setSuccessVisible] = useState(false); 
-const [ErrorVisible, setErrorVisible] = useState(false); 
-const [errorMessage, seterrorMessage] = useState(''); 
+    const [SuccessVisible, setSuccessVisible] = useState(false);
+    const [ErrorVisible, setErrorVisible] = useState(false);
+    const [errorMessage, seterrorMessage] = useState('');
 
-const uploadImage = async (uri, imageName, DirectoryName) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    const storage = getStorage();
-    const storageRef = ref(storage, DirectoryName + "/" + imageName);
-    const image_response = await uploadBytes(storageRef, blob);
-    
-}
-
-
-let foodRandom = () => {
-    const dateString = Date.now().toString(36);
-    const randomness = Math.random().toString(36).substr(2);
-    return dateString + randomness;
-}
-
-const handleSubmit = async () => {
-   
-
-
-    
-    try {
-        if(!menu_data.food_name.trim() || !menu_data.food_description.trim() ){ 
-            throw new Error("some fields are empty, please fill all of them!"); 
-        }
-        setloading(true); 
-    const RestaurantRef = doc(db,"Restaurants",restaurant_id);
-    const rest = await getDoc(RestaurantRef); 
-    const restaurant_data = rest.data(); 
-     let menu = {}; 
-     let food_id = 0; 
-     if(restaurant_data.restaurant_menu!= null && restaurant_data.restaurant_menu!= ""){
-      menu = restaurant_data.restaurant_menu; 
-     const food_menu_array = Object.entries(menu).map((e) => ( { [e[0]]: e[1] } ));
-     food_id = foodRandom(); 
-     }
-     
-const menu_reshape = Object.assign(menu, {   [food_id] : {food_name: menu_data.food_name, 
-    food_description: menu_data.food_description,
-    food_price: {Mala: food_price.Mala, 
-     Srednja: food_price.Srednja, 
-     Velika: food_price.Velika
-    }} }); 
-  
-      const response = await updateDoc(RestaurantRef,{ restaurant_menu: menu_reshape })
-      uploadImage(Imageuri,food_id,restaurant_id); 
-      setloading(false); 
-      setSuccessVisible(true); 
-    } catch (error) {
-
-        seterrorMessage(error.message); 
-        setErrorVisible(true); 
-
+    const uploadImage = async (uri, imageName, DirectoryName) => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        const storage = getStorage();
+        const storageRef = ref(storage, DirectoryName + "/" + imageName);
+        const image_response = await uploadBytes(storageRef, blob);
 
     }
 
-}
+
+    let foodRandom = () => {
+        const dateString = Date.now().toString(36);
+        const randomness = Math.random().toString(36).substr(2);
+        return dateString + randomness;
+    }
+
+    const handleSubmit = async () => {
+
+
+
+
+        try {
+            if (!menu_data.food_name.trim() || !menu_data.food_description.trim()) throw new Error("some fields are empty, please fill all of them!");
+            if (Imageuri == "" || Imageuri == null || Imageuri == undefined) throw new Error("Please select a image!");
+
+            setloading(true);
+            const RestaurantRef = doc(db, "Restaurants", restaurant_id);
+            const rest = await getDoc(RestaurantRef);
+            const restaurant_data = rest.data();
+            let menu = {};
+            let food_id = 0;
+            if (restaurant_data.restaurant_menu != null && restaurant_data.restaurant_menu != "") {
+                menu = restaurant_data.restaurant_menu;
+                const food_menu_array = Object.entries(menu).map((e) => ({ [e[0]]: e[1] }));
+                food_id = foodRandom();
+            }
+
+            const menu_reshape = Object.assign(menu, {
+                [food_id]: {
+                    food_name: menu_data.food_name,
+                    food_description: menu_data.food_description,
+                    food_price: {
+                        Mala: food_price.Mala,
+                        Srednja: food_price.Srednja,
+                        Velika: food_price.Velika
+                    }
+                }
+            });
+
+            const response = await updateDoc(RestaurantRef, { restaurant_menu: menu_reshape })
+            uploadImage(Imageuri, food_id, restaurant_id);
+            setloading(false);
+            setSuccessVisible(true);
+
+            setmenu_data({
+                food_name: "",
+                food_description: "",
+            });
+            setfood_price({
+                Mala: "",
+                Srednja: "",
+                Velika: ""
+
+            })
+
+
+        } catch (error) {
+
+            seterrorMessage(error.message);
+            setErrorVisible(true);
+
+
+        }
+
+    }
 
 
     return (
         <View style={styles.container}>
-            { !loading ? 
-            <ScrollView contentContainerStyle={styles.form}>
-                <ImageUploader setImageuri={setImageuri} />
-                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter food name..." onChangeText={(val) => setmenu_data((curr) => { return { ...curr, food_name: val} })} />
-                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter food description..." onChangeText={(val) => setmenu_data((curr) => { return { ...curr, food_description: val } })} />
-                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Big portion price..." onChangeText={    (val) => setfood_price( (curr) => {return {...curr, Velika: val}})} />
-                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Middle portion price ..." onChangeText={(val) => setfood_price( (curr) => {return {...curr, Srednja: val}})} />
-                <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Small portion price ..." onChangeText={(val) => setfood_price( (curr) => {return {...curr, Mala: val}})} />
-             
-                <TouchableOpacity  onPress={handleSubmit}  style={styles.button} ><Text style={{ color: "white", textAlign: "center", fontWeight: "600" }}>Submit</Text></TouchableOpacity>
-                <Success setSuccessVisible={setSuccessVisible} SuccessVisible={SuccessVisible} message="item successfully added to Menu!" />
-            <ErrorComponent ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
-            </ScrollView> : <ActivityIndicator size="large" color="#694fad" /> } 
+            {!loading ?
+                <ScrollView contentContainerStyle={styles.form}>
+
+                    <ImageUploader setImageuri={setImageuri} />
+                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter food name..." onChangeText={(val) => setmenu_data((curr) => { return { ...curr, food_name: val } })} />
+                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter food description..." onChangeText={(val) => setmenu_data((curr) => { return { ...curr, food_description: val } })} />
+                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Big portion price..." onChangeText={(val) => setfood_price((curr) => { return { ...curr, Velika: val } })} />
+                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Middle portion price ..." onChangeText={(val) => setfood_price((curr) => { return { ...curr, Srednja: val } })} />
+                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Small portion price ..." onChangeText={(val) => setfood_price((curr) => { return { ...curr, Mala: val } })} />
+
+                    <TouchableOpacity onPress={handleSubmit} style={styles.button} ><Text style={{ color: "white", textAlign: "center", fontWeight: "600" }}>Submit</Text></TouchableOpacity>
+                    <Success setSuccessVisible={setSuccessVisible} SuccessVisible={SuccessVisible} message="item successfully added to Menu!" />
+                    <ErrorComponent ErrorVisible={ErrorVisible} setErrorVisible={setErrorVisible} message={errorMessage} />
+
+                </ScrollView> : <ActivityIndicator size="large" color="#694fad" />}
         </View>
     )
 }
@@ -123,7 +143,6 @@ const styles = StyleSheet.create({
     },
     form: {
         alignItems: "center",
-        flex: 1,
         marginTop: 20
     },
     'input-field': {

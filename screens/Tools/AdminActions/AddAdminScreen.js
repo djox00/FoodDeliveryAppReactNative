@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { collection, query, where, updateDoc, doc, getFirestore, getDocs } from "firebase/firestore";
-import Error from '../../../UI Components/Error';
-
+import ErrorComponent from '../../../UI Components/Error';
+import Success from '../../../UI Components/Success';
 
 const AddAdminScreen = () => {
 
-    const [error, seterror] = useState({ message: '', status: false });
+    const [SuccessVisible, setSuccessVisible] = useState(false); 
+    const [errorMessage, seterrorMessage] = useState(''); 
+    const [ErrorVisible, setErrorVisible] = useState(false); 
 
     const db = getFirestore();
     const UsersRef = collection(db, "Users");
@@ -26,26 +28,28 @@ const AddAdminScreen = () => {
             const q = query(UsersRef, where("email", "==", email));
             const user = await getDocs(q);
 
-            if (user.empty) seterror({ message: "no such Email found!", status: true });
+            if (user.empty) throw new Error("no such Email found!"); 
            
             user.forEach((doc) => {
                 setuid(doc.id);
             });
+            updateAdmin();
+            setSuccessVisible(true); 
 
         } catch (error) {
-            seterror({ message: error.message, status: true });
-
+            setErrorVisible(true); 
+            errorMessage(error.message); 
         }
 
 
 
-        updateAdmin();
+      
     }
 
 
     return (
         <View style={styles.container}>
-            {error.status == true ? <Error message={error.message} /> : null}
+           
             <ScrollView contentContainerStyle={styles.form}>
                 <Text style={{ textAlign: "justify", marginHorizontal: 40, fontWeight: "500", marginBottom: 40 }}>NOTE: Assigning admin role to a users may
                     gains the user full access over the infrastructure. {"\n"}{"\n"}
@@ -58,7 +62,8 @@ const AddAdminScreen = () => {
                 <TextInput style={[styles['input-field'], { marginBottom: 50 }]} onChangeText={(val) => setemail(val)} />
 
                 <TouchableOpacity onPress={handleSubmit} style={styles.button} ><Text style={{ color: "white", textAlign: "center", fontWeight: "600" }}>Submit</Text></TouchableOpacity>
-
+                <ErrorComponent setErrorVisible={setErrorVisible} ErrorVisible={ErrorVisible} message={errorMessage} />
+                <Success setSuccessVisible={setSuccessVisible} SuccessVisible={SuccessVisible} message="Admin added successfully!" />
             </ScrollView>
         </View>
     )

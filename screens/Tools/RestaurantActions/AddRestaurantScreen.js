@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native'
 import { collection, query, where, doc, getFirestore, getDocs, addDoc, updateDoc } from "firebase/firestore";
-import Error from '../../../UI Components/Error';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import ImageUploader from './ImageUploader';
-
-
+import ErrorComponent from '../../../UI Components/Error';
+import Success from '../../../UI Components/Success'
 
 const AddRestaurantScreen = ({navigation}) => {
 
-  
+    const [ErrorVisible, setErrorVisible] = useState(false); 
+    const [SuccessVisible, setSuccessVisible] = useState(false); 
+    const [errorMessage, seterrorMessage] = useState(''); 
 
 
    
     const db = getFirestore();    
-    const [error, seterror] = useState({ message: '', status: false });
+    
     const [restaurant_added, setrestaurant_added] = useState({}); 
     const [loading, setloading] = useState(false); 
     const [email, setemail] = useState('');
@@ -65,15 +66,18 @@ const AddRestaurantScreen = ({navigation}) => {
 
 
         try {
-            setloading(true); 
+            
+         
            let uid = null; 
             const UsersRef = collection(db, "Users");
             const q = query(UsersRef, where("email", "==", email));
             const user = await getDocs(q);
-  
-            if (user.empty){ seterror({ message: "no such Email found!", status: true });
-
-             } else {
+            console.log(restaurant_data.restaurant_owner)
+            if(!restaurant_data.restaurant_name.trim() || !restaurant_data.restaurant_adress.trim() || !email.trim()) throw new Error("Please enter data to all fields!"); 
+            if ( user == undefined || user.empty)  throw Error("no such Email found!"); 
+            if(Imageuri == "" || Imageuri == null || Imageuri== undefined ) throw new Error("Please select a image!"); 
+            
+            setloading(true);            
 
                 user.forEach((doc) => {
                      uid = doc.id; 
@@ -88,17 +92,28 @@ const AddRestaurantScreen = ({navigation}) => {
                 restaurant_owner: uid
             });
             if(userType != "admin") {
+                console.log(userType); 
             const user_to_restaurant_owner = await updateDoc(doc(db, "Users", uid), { user: "restaurant_owner" });}
-
+            
+            
             const image_upload_response = await uploadImage(Imageuri, restaurant_data.restaurant_name, restaurant_response.id);
+
             setloading(false); 
             setrestaurant_added({restaurant_id: restaurant_response.id }); 
-    
+            setSuccessVisible(true); 
+
+            setrestaurant_data({
+                restaurant_name: "",
+                restaurant_adress: "",
+                restaurant_description: "",
+                restaurant_owner: ""
+            }); 
             
  
-}
+
         } catch (error) {
-     seterror({message: error.message, status: true}); 
+            seterrorMessage(error.message); 
+            setErrorVisible(true); 
 
         }
 
@@ -110,7 +125,7 @@ const AddRestaurantScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
 
-            {error.status == true ? <Error message={error.message} /> : null}
+          
             { !loading ? 
             <ScrollView contentContainerStyle={styles.form}>
                 <ImageUploader setImageuri={setImageuri} />
@@ -120,7 +135,8 @@ const AddRestaurantScreen = ({navigation}) => {
                 <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Restaurant description..." onChangeText={(val) => setrestaurant_data((curr) => { return { ...curr, restaurant_description: val } })} />
 
                 <TouchableOpacity  onPress={()=>handleSubmit()} style={styles.button} ><Text style={{ color: "white", textAlign: "center", fontWeight: "600" }}>Submit</Text></TouchableOpacity>
-
+             <ErrorComponent setErrorVisible={setErrorVisible} ErrorVisible={ErrorVisible} message={errorMessage} /> 
+             <Success setSuccessVisible={setSuccessVisible} SuccessVisible={SuccessVisible} message="Restaurant added successfully!" />
             </ScrollView>:  <ActivityIndicator size="large" color="#694fad" /> } 
         </View>
     )

@@ -38,7 +38,8 @@ const AddAdminScreen = () => {
 
         } catch (error) {
             setErrorVisible(true); 
-            errorMessage(error.message); 
+            console.log(error.message)
+            seterrorMessage(error.message); 
         }
 
 

@@ -16,7 +16,7 @@ const Login = ({navigation}) => {
     const handleLogin = async (e, p) => {
         
         try {
-         
+          e = e.trim(); 
           const user = await signInWithEmailAndPassword(auth, e, p);
          navigation.navigate("Main"); 
     

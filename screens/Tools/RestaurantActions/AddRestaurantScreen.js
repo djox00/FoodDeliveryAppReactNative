@@ -91,9 +91,10 @@ const AddRestaurantScreen = ({navigation}) => {
                 restaurant_description: restaurant_data.restaurant_description,    
                 restaurant_owner: uid
             });
-            if(userType != "admin") {
+            if(userType == "user") {
                 console.log(userType); 
-            const user_to_restaurant_owner = await updateDoc(doc(db, "Users", uid), { user: "restaurant_owner" });}
+            const user_to_restaurant_owner = await updateDoc(doc(db, "Users", uid), { user: "restaurant_owner" });
+        }
             
             
             const image_upload_response = await uploadImage(Imageuri, restaurant_data.restaurant_name, restaurant_response.id);

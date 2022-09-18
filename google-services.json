@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "970708991410",
+    "firebase_url": "https://fooddeliveryapp-5503d-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "fooddeliveryapp-5503d",
     "storage_bucket": "fooddeliveryapp-5503d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:970708991410:android:d5fd7850bf7760e27f78ab",
+        "mobilesdk_app_id": "1:970708991410:android:253445936ef9bec27f78ab",
         "android_client_info": {
-          "package_name": "ba.com.fooddeliveryapp"
+          "package_name": "com.fooddelivery.app"
         }
       },
       "oauth_client": [

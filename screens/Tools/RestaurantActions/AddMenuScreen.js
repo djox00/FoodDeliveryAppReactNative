@@ -114,11 +114,12 @@ const AddMenuScreen = ({ navigation, route }) => {
                 <ScrollView contentContainerStyle={styles.form}>
 
                     <ImageUploader setImageuri={setImageuri} />
-                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Big portion price..." onChangeText={(val) => setfood_price((curr) => { return { ...curr, Velika: val } })} />
                     <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter food name..." onChangeText={(val) => setmenu_data((curr) => { return { ...curr, food_name: val } })} />
+                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter food description..." onChangeText={(val) => setmenu_data((curr) => { return { ...curr, food_description: val } })} />
+                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Big portion price..." onChangeText={(val) => setfood_price((curr) => { return { ...curr, Velika: val } })} />
                     <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Middle portion price ..." onChangeText={(val) => setfood_price((curr) => { return { ...curr, Srednja: val } })} />
                     <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter Small portion price ..." onChangeText={(val) => setfood_price((curr) => { return { ...curr, Mala: val } })} />
-                    <TextInput style={[styles['input-field'], { marginBottom: 10 }]} placeholder="enter food description..." onChangeText={(val) => setmenu_data((curr) => { return { ...curr, food_description: val } })} />
+                   
 
                     <TouchableOpacity onPress={handleSubmit} style={styles.button} ><Text style={{ color: "white", textAlign: "center", fontWeight: "600" }}>Submit</Text></TouchableOpacity>
                     <Success setSuccessVisible={setSuccessVisible} SuccessVisible={SuccessVisible} message="item successfully added to Menu!" />

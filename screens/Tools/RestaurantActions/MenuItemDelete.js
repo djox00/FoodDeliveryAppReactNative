@@ -44,9 +44,9 @@ const MenuItemDelete = ({ item, restaurant_id, deleteById  }) => {
 
             <View style={styles.card}>
 
-
+                  
                 <Image source={{ uri: imgURL ? imgURL : "http://www.fnfmetal.com/uploads/products/1311-product_Mp8wDrKX.jpg" }} style={{marginLeft: 20, width: 70, height: 70, borderRadius: 10 }} />
-
+               
                 <Text style={{ color: "white", textAlign: "center", marginHorizontal: 20 }}>{item?.food?.food_name}</Text>
 
                 <TouchableOpacity onPress={handleDeleteMenuItem} style={{position: "absolute", right: 20, transform: [{scale: 1.5}]}}>   
@@ -65,13 +65,13 @@ export default MenuItemDelete
 const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
         alignItems: 'center',
         overflow: "hidden",
         backgroundColor: "#694fad",
         marginBottom: 10,
         width: "100%",
-        height: 80
+        height: 80,
+        
 
 
     },

@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity } from 'react-native'
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { doc, updateDoc, collection, query, where, getFirestore } from '@firebase/firestore';
 import MenuItemDelete from './MenuItemDelete';
 import ErrorComponent from '../../../UI Components/Error'; 
 import Success from '../../../UI Components/Success'; 
-
+import * as ImagePicker from 'expo-image-picker';
 
 const EditRestaurantScreen = ({ navigation, route }) => {
 
@@ -34,7 +34,7 @@ const EditRestaurantScreen = ({ navigation, route }) => {
     }
 
     useEffect(() => {
-        getImageFromStorage();
+        if(imgURL == "") getImageFromStorage();
     }, [restaurant_data])
 
 
@@ -51,6 +51,31 @@ const EditRestaurantScreen = ({ navigation, route }) => {
   const  restaurantRef = doc(db, "Restaurants", restaurant_data.id);
 
 
+    const uploadImage = async (uri, imageName, DirectoryName) => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        const storage = getStorage();
+        const storageRef = ref(storage, DirectoryName + "/" + imageName);
+        const image_response = await uploadBytes(storageRef, blob);
+        
+    }
+
+
+    const pickImage = async () => {
+  
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      if (!result.cancelled) {
+        setimgURL(result.uri); 
+      }
+    };
+  
+
 
 
     const UpdateRestaurantInfo = async () => {
@@ -66,6 +91,8 @@ try {
         restaurant_adress: restaurant_info.restaurant_adress, 
         restaurant_description: restaurant_info.restaurant_description
     })
+
+    uploadImage(imgURL,restaurant_info.restaurant_name,restaurant_data.id); 
     setSuccessVisible(true);
     
 } catch (error) {
@@ -110,7 +137,9 @@ const restaurant_menu = restaurant_data.restaurant_menu;
             <ScrollView contentContainerStyle={styles.form}>
 
                 <View style={styles['restaurant-info']}>
-                    <Image source={{ uri: imgURL ? imgURL : "http://www.fnfmetal.com/uploads/products/1311-product_Mp8wDrKX.jpg" }} style={{ width: 130, height: 130, borderRadius: 10 }} />
+                 <TouchableOpacity onPress={pickImage}> 
+                 <Image source={{ uri: imgURL ? imgURL : "http://www.fnfmetal.com/uploads/products/1311-product_Mp8wDrKX.jpg" }} style={{ width: 130, height: 130, borderRadius: 10 }} /> 
+                 </TouchableOpacity>   
                     <TextInput style={styles['input-field']} value={restaurant_info.restaurant_name} onChangeText={(value) => setrestaurant_info((curr) => { return { ...curr, restaurant_name: value } })} />
                     <TextInput style={styles['input-field']} value={restaurant_info.restaurant_adress} onChangeText={(value) => setrestaurant_info((curr) => { return { ...curr, restaurant_adress: value } })} />
                     <TextInput style={[styles['input-field'], { height: 70 }]} textBreakStrategy={'highQuality'} multiline={true} value={restaurant_info.restaurant_description} onChangeText={(value) => setrestaurant_info((curr) => { return { ...curr, restaurant_description: value } })} />
